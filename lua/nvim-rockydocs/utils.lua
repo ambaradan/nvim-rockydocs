@@ -314,4 +314,58 @@ end
 
 -- }}}
 
+function M.open_mkdocs_browser()
+	-- Check if a server is running and we have a port
+	if not state.current_server_port then
+		vim.notify("No MkDocs server is currently running", vim.log.levels.WARN)
+		return false
+	end
+
+	-- Construct the URL
+	local url = string.format("http://localhost:%d", state.current_server_port)
+
+	-- Detect OS and choose appropriate command
+	local open_cmd
+	local os_command = vim.fn.system("uname -s"):gsub("\n", "")
+
+	if os_command == "Darwin" then
+		open_cmd = string.format("open %s", url)
+	elseif os_command == "Linux" then
+		-- Try different Linux browsers
+		local browsers = {
+			"xdg-open",
+			"gnome-open",
+			"kde-open",
+			"x-www-browser",
+			"firefox",
+			"google-chrome",
+			"chromium",
+		}
+
+		for _, browser in ipairs(browsers) do
+			if vim.fn.executable(browser) == 1 then
+				open_cmd = string.format("%s %s", browser, url)
+				break
+			end
+		end
+	elseif os_command:match("MINGW") or os_command:match("MSYS") or os_command:match("Windows") then
+		open_cmd = string.format("start %s", url)
+	end
+
+	-- Execute the open command
+	if open_cmd then
+		local result = vim.fn.system(open_cmd)
+		if vim.v.shell_error ~= 0 then
+			vim.notify(string.format("Failed to open browser: %s", result), vim.log.levels.ERROR)
+			return false
+		else
+			vim.notify(string.format("Opening MkDocs at %s", url), vim.log.levels.INFO)
+			return true
+		end
+	else
+		vim.notify("Could not determine browser to open URL", vim.log.levels.ERROR)
+		return false
+	end
+end
+
 return M
