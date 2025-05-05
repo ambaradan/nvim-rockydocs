@@ -17,6 +17,7 @@ end, {
 		return { "8000", "8080", "8888" }
 	end,
 })
+vim.api.nvim_create_user_command("RockyDocsStop", mkdocs.stop_serve, {})
 -- Add browser open command
 vim.api.nvim_create_user_command("RockyDocsOpen", function()
 	venv.open_mkdocs_browser()
