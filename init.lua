@@ -1,9 +1,6 @@
 -- lua/nvim-rockydocs/init.lua
-local M = {}
+require("nvim-rockydocs.main")
+require("nvim-rockydocs.utils")
+require("nvim-rockydocs.mappings")
 
-function M.setup(opts)
-    opts = opts or {}
-    -- Add setup logic here
-end
-
-return M
+return {}
