@@ -8,8 +8,14 @@ M.config = {
 		"/usr/local/bin",
 		"/usr/bin",
 		os.getenv("HOME") .. "/.local/bin",
-		server_job_id = nil,
 	},
+	-- Add default port configuration
+	mkdocs_server = {
+		default_port = 8000, -- Default MkDocs serve port
+		port_range_start = 8000,
+		port_range_end = 8100,
+	},
+	server_job_id = nil,
 }
 
 -- State management

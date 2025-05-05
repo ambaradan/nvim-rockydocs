@@ -45,7 +45,7 @@ end
 
 -- Serve the MkDocs documentation {{{
 
-function M.serve()
+function M.serve(opts)
 	utils.activate_venv() -- Activate the virtual environment
 	if not utils.venv_is_active() then -- Check if the virtual environment is now active
 		vim.notify("Please activate a virtual environment first", vim.log.levels.ERROR)
@@ -64,8 +64,18 @@ function M.serve()
 		vim.fn.jobstop(configs.server_job_id)
 	end
 
-	local cmd = utils.get_python_path() .. " -m mkdocs serve -q"
-	vim.notify("Starting RockyDocs server...", vim.log.levels.INFO)
+	-- Determine the port to use
+	local port = opts and opts.port or configs.config.mkdocs_server.default_port
+
+	-- Check if port is within the allowed range
+	if port < configs.config.mkdocs_server.port_range_start or port > configs.config.mkdocs_server.port_range_end then
+		vim.notify("Port out of allowed range. Using default port.", vim.log.levels.WARN)
+		port = configs.config.mkdocs_server.default_port
+	end
+
+	local cmd = string.format("%s -m mkdocs serve -a localhost:%d", utils.get_python_path(), port)
+
+	vim.notify(string.format("Starting RockyDocs server on port %d...", port), vim.log.levels.INFO)
 
 	-- Start the server as a background job
 	configs.server_job_id = vim.fn.jobstart(cmd, {
@@ -86,8 +96,12 @@ function M.serve()
 		on_exit = function()
 			utils.deactivate_venv()
 			configs.server_job_id = nil
+			configs.state.current_server_port = nil
 		end,
 	})
+
+	-- Store the current server port
+	configs.state.current_server_port = port
 
 	return true
 end
