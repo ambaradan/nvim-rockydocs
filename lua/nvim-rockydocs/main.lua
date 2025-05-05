@@ -56,50 +56,52 @@ end
 -- Serve the MkDocs documentation {{{
 
 function M.serve()
-	utils.activate_venv() -- Activate the virtual environment
-	if not utils.venv_is_active() then -- Check if the virtual environment is now active
-		vim.notify("Please activate a virtual environment first", vim.log.levels.ERROR)
-		return false
-	end
+    utils.activate_venv() -- Activate the virtual environment
+    
+    if not utils.venv_is_active() then
+        vim.notify("Please activate a virtual environment first", vim.log.levels.ERROR)
+        return false
+    end
 
-	utils.check_mkdocs_installed()
+    utils.check_mkdocs_installed()
 
-	if vim.fn.filereadable("mkdocs.yml") ~= 1 then -- Ensure mkdocs.yml is present
-		vim.notify("No mkdocs.yml found in the current directory", vim.log.levels.ERROR)
-		return false
-	end
+    if vim.fn.filereadable("mkdocs.yml") ~= 1 then
+        vim.notify("No mkdocs.yml found in the current directory", vim.log.levels.ERROR)
+        return false
+    end
 
-	-- Stop any existing server first if already running
-	if configs.server_job_id and vim.fn.jobwait({ configs.server_job_id }, 0)[1] == -1 then
-		vim.fn.jobstop(configs.server_job_id)
-	end
+    -- Stop any existing server first if already running
+    if configs.server_job_id and vim.fn.jobwait({ configs.server_job_id }, 0)[1] == -1 then
+        vim.fn.jobstop(configs.server_job_id)
+    end
 
-	local cmd = utils.get_python_path() .. " -m mkdocs serve -q"
-	vim.notify("Starting RockyDocs server...", vim.log.levels.INFO)
+    -- Use the port from the configuration
+    local cmd = utils.get_python_path() .. string.format(" -m mkdocs serve --dev-addr=127.0.0.1:%s -q", init.config.port)
+    vim.notify("Starting RockyDocs server on port " .. init.config.port .. "...", vim.log.levels.INFO)
 
-	-- Start the server as a background job
-	configs.server_job_id = vim.fn.jobstart(cmd, {
-		on_stdout = function(_, data)
-			if data then
-				for _, line in ipairs(data) do
-					if line:find("Serving") then
-						vim.notify(line, vim.log.levels.INFO)
-					end
-				end
-			end
-		end,
-		on_stderr = function(_, data)
-			if data then
-				vim.notify(table.concat(data, "\n"), vim.log.levels.INFO)
-			end
-		end,
-		on_exit = function()
-			utils.deactivate_venv()
-			configs.server_job_id = nil
-		end,
-	})
+    -- Start the server as a background job
+    configs.server_job_id = vim.fn.jobstart(cmd, {
+        on_stdout = function(_, data)
+            if data then
+                for _, line in ipairs(data) do
+                    if line:find("Serving") then
+                        vim.notify(line, vim.log.levels.INFO)
+                    end
+                end
+            end
+        end,
+        on_stderr = function(_, data)
+            if data then
+                vim.notify(table.concat(data, "\n"), vim.log.levels.INFO)
+            end
+        end,
+        on_exit = function()
+            utils.deactivate_venv()
+            configs.server_job_id = nil
+        end,
+    })
 
-	return true
+    return true
 end
 
 -- }}}
