@@ -3,7 +3,7 @@ local M = {}
 local utils = require("nvim-rockydocs.utils")
 local configs = require("nvim-rockydocs.configs")
 
--- Install MkDocs for RockyDocs Project
+-- Install MkDocs for RockyDocs Project {{{
 
 function M.rockydocs()
 	-- Check if the virtual environment is active
@@ -29,19 +29,26 @@ function M.rockydocs()
 			return false
 		else
 			vim.notify("Successfully installed requirements", vim.log.levels.INFO)
-			-- Remove requirements.txt and README.md files silently
-			local files = { "requirements.txt", "README.md" }
+			-- Remove requirements.txt, README.md, and .git folder silently
+			local files = { "requirements.txt", "README.md", "LICENSE", ".git" }
+
 			for _, file in ipairs(files) do
-				local f = io.open(file, "r")
-				if f then
-					f:close()
+				-- Check if the file or directory exists before attempting to remove it
+				if vim.fn.filereadable(file) == 1 then
+					-- If it's a file, proceed with removal as before
+					io.open(file, "r"):close()
 					os.remove(file)
+				elseif vim.fn.isdirectory(file) == 1 then
+					-- If it's a directory, recursively remove it using the `rm` command
+					vim.fn.system("rm -rf " .. file)
 				end
 			end
 			return true
 		end
 	end
 end
+
+-- }}}
 
 -- Serve the MkDocs documentation {{{
 
