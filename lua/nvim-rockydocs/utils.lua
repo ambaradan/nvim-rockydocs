@@ -322,7 +322,8 @@ function M.status()
 		python_path = M.get_python_path()
 		-- If the Python path is not found, return an error message
 		if not python_path or python_path == "" then
-			return "Active venv but Python path not found"
+			vim.notify("Active venv but Python path not found", vim.log.levels.WARN)
+			return
 		end
 
 		-- Get the name of the active virtual environment
@@ -334,13 +335,19 @@ function M.status()
 		python_name = vim.fn.fnamemodify(python_path, ":t") or "unknown_python"
 		python_version = M.get_python_version(python_path)
 
-		-- Return a formatted string with the active virtual environment and Python information
-		return string.format(
+		-- Display a formatted string with the active virtual environment and Python information
+		local status_message = string.format(
 			"Active: '%s'\nPython: %s (%s) [from virtual environment]",
 			venv_name,
 			python_name,
 			python_version
 		)
+		vim.notify(status_message, vim.log.levels.INFO)
+
+		-- Display additional information
+		local additional_info =
+			string.format("Python path: %s\nVirtual environment path: %s", python_path, vim.env.VIRTUAL_ENV)
+		vim.notify(additional_info, vim.log.levels.INFO)
 
 	-- Check if a virtual environment exists but is not currently active
 	elseif M.venv_exists() then
@@ -358,14 +365,14 @@ function M.status()
 		python_name = vim.fn.fnamemodify(python_path, ":t") or "system_python"
 		python_version = M.get_python_version(python_path)
 
-		-- Return a formatted string with the inactive virtual environment and Python information
-		return string.format(
+		-- Display a formatted string with the inactive virtual environment and Python information
+		local status_message = string.format(
 			"Exists but inactive: '%s'\nPython: %s (%s) [from system]",
 			venv_name,
 			python_name,
 			python_version
 		)
-
+		vim.notify(status_message, vim.log.levels.INFO)
 	-- If no virtual environment exists at all
 	else
 		-- Get the original Python path (likely the system Python)
@@ -375,8 +382,10 @@ function M.status()
 		-- Get the version of the system Python interpreter
 		python_version = M.get_python_version(python_path)
 
-		-- Return a formatted string with the information about the system Python
-		return string.format("No virtual environment\nPython: %s (%s) [from system]", python_name, python_version)
+		-- Display a formatted string with the information about the system Python
+		local status_message =
+			string.format("No virtual environment\nPython: %s (%s) [from system]", python_name, python_version)
+		vim.notify(status_message, vim.log.levels.INFO)
 	end
 end
 
