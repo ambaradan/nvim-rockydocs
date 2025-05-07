@@ -7,7 +7,7 @@ local state = require("nvim-rockydocs.configs").state
 
 -- Function to activate the virtual environment for Mkdocs commands
 function M.activate_venv()
-	-- Check if the virtual environment is not active -
+	-- Check if the virtual environment is not active
 	if not M.venv_is_active() then
 		-- If not active, activate the virtual environment
 		M.activate()
