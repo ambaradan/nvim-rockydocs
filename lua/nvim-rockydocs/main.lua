@@ -39,14 +39,14 @@ function M.rockydocs()
 	})
 
 	-- Wait for the download job to finish
-	local download_status = vim.fn.jobwait({ download_job })
-	if download_status[1] == 0 then
-		vim.notify("Latest release downloaded successfully", vim.log.levels.INFO)
-	elseif download_status[1] == -1 then
-		vim.notify("Download job is still running", vim.log.levels.WARN)
-	else
-		vim.notify("Download job has failed with status " .. tostring(download_status[1]), vim.log.levels.ERROR)
-	end
+	-- local download_status = vim.fn.jobwait({ download_job })
+	-- if download_status[1] == 0 then
+	-- 	vim.notify("Latest release downloaded successfully", vim.log.levels.INFO)
+	-- elseif download_status[1] == -1 then
+	-- 	vim.notify("Download job is still running", vim.log.levels.WARN)
+	-- else
+	-- 	vim.notify("Download job has failed with status " .. tostring(download_status[1]), vim.log.levels.ERROR)
+	-- end
 
 	-- Move files from the extracted directory to the current directory
 	local move_files_cmd = [[
