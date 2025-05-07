@@ -68,7 +68,7 @@ Step 3: Load nvim-rockydocs
 To load nvim-rockydocs, you can add configuration options to your init.lua file. For example:
 
 ```lua
-require("nvim-rockydocs").setup()
+require("nvim-rockydocs")
 ```
 
 ## RockyDocs Commands
