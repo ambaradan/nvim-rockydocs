@@ -1,7 +1,7 @@
 local M = {}
 
-local utils = require("nvim-rockydocs.utils")
-local configs = require("nvim-rockydocs.configs")
+local utils = require("rockydocs.utils")
+local configs = require("rockydocs.configs")
 
 -- Install MkDocs for RockyDocs Project {{{
 
