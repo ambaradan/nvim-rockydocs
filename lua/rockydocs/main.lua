@@ -1,7 +1,7 @@
 local M = {}
 
-local utils = require("rockydocs.utils")
-local configs = require("rockydocs.configs")
+local utils = require("nvim-rockydocs.utils")
+local configs = require("nvim-rockydocs.configs")
 
 -- Install MkDocs for RockyDocs Project {{{
 
@@ -9,116 +9,116 @@ local configs = require("rockydocs.configs")
 --- This function assumes that a virtual environment is already activated.
 --- If no virtual environment is active, it will notify the user to activate one first.
 --- It also removes unnecessary files and folders after cloning.
-
--- Utility function to check if virtual environment is active
-local function venv_is_active()
-  return vim.fn.exists('$VIRTUAL_ENV') == 1
-end
-
--- Utility function to get Python path
-local function get_python_path()
-  return vim.fn.exepath('python') or vim.fn.exepath('python3')
-end
-
 function M.rockydocs()
-    -- Check if the virtual environment is active
-    if not venv_is_active() then
-        vim.notify("Please activate a virtual environment first", vim.log.levels.ERROR)
-        return false
-    end
+	-- Check if the virtual environment is active
+	if not utils.venv_is_active() then
+		vim.notify("Please activate a virtual environment first", vim.log.levels.ERROR)
+		return false
+	end
 
-    -- Clone the repository into a template folder
-    local template_folder = "rockydocs-template"
-    local clone_cmd = {"git", "clone", "https://github.com/ambaradan/rockydocs-template.git", template_folder}
+	-- Clone the repository
+	local clone_cmd = "git clone https://github.com/ambaradan/rockydocs-template.git ."
+	local clone_job = vim.fn.jobstart(clone_cmd, {
+		on_stdout = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.INFO)
+			end
+		end,
+		on_stderr = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.ERROR)
+			end
+		end,
+	})
 
-    -- Use vim.system instead of jobstart for better error handling
-    local clone = vim.system(clone_cmd, {
-        stdout = function(_, data)
-            vim.notify(data, vim.log.levels.INFO)
-        end,
-        stderr = function(_, data)
-            vim.notify(data, vim.log.levels.ERROR)
-        end,
-    })
+	-- Wait for the clone job to finish
+	local clone_status = vim.fn.jobwait({ clone_job })
+	if clone_status[1] ~= -1 then
+		if clone_status[1] ~= 0 then
+			local error_message = "Failed to clone repository. Please check the error message above for more details."
+			if clone_status[2] then
+				error_message = string.format(
+					"Failed to clone repository. Error code: %d. Error message: %s",
+					clone_status[1],
+					clone_status[2]
+				)
+			end
+			vim.notify(error_message, vim.log.levels.ERROR)
+			return
+		elseif vim.fn.system("git rev-parse --git-dir") ~= "" then
+			vim.notify("Repository cloned successfully", vim.log.levels.INFO)
+		else
+			vim.notify(
+				"Failed to clone repository. The current directory is not a git repository.",
+				vim.log.levels.ERROR
+			)
+			return
+		end
+	else
+		vim.notify("Failed to clone repository. The job is still running.", vim.log.levels.ERROR)
+		return
+	end
 
-    local clone_result = clone:wait()
-    if clone_result.code ~= 0 then
-        vim.notify("Failed to clone repository: " .. clone_result.stderr, vim.log.levels.ERROR)
-        return false
-    end
+	-- Check if pip is up to date
+	local python_path = utils.get_python_path()
+	local pip_upgrade_cmd = string.format("%s -m pip install --upgrade pip", python_path)
+	local pip_upgrade_job = vim.fn.jobstart(pip_upgrade_cmd, {
+		on_stdout = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.INFO)
+			end
+		end,
+		on_stderr = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.ERROR)
+			end
+		end,
+	})
 
-    -- Files to copy from template to root
-    local files_to_copy = {"mkdocs.yml", ".theme", "docs"}
+	-- Wait for the pip upgrade job to finish
+	local pip_upgrade_status = vim.fn.jobwait({ pip_upgrade_job })
+	if pip_upgrade_status[1] ~= -1 then
+		if pip_upgrade_status[1] == 0 then
+			vim.notify("pip upgraded successfully", vim.log.levels.INFO)
+		else
+			vim.notify("Failed to upgrade pip", vim.log.levels.ERROR)
+			return
+		end
+	end
 
-    for _, file in ipairs(files_to_copy) do
-        local source = template_folder .. "/" .. file
-        local copy_cmd = {"cp", "-r", source, "."}
+	-- Install requirements
+	local install_cmd = python_path .. " -m pip install --quiet -r requirements.txt"
+	local install_job = vim.fn.jobstart(install_cmd, {
+		on_stdout = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.INFO)
+			end
+		end,
+		on_stderr = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.ERROR)
+			end
+		end,
+	})
 
-        local copy = vim.system(copy_cmd, {
-            stdout = function(_, data)
-                vim.notify(data, vim.log.levels.INFO)
-            end,
-            stderr = function(_, data)
-                vim.notify(data, vim.log.levels.ERROR)
-            end,
-        })
+	-- Wait for the install job to finish
+	vim.fn.jobwait({ install_job })
 
-        local copy_result = copy:wait()
-        if copy_result.code ~= 0 then
-            vim.notify("Failed to copy " .. file .. ": " .. copy_result.stderr, vim.log.levels.ERROR)
-            return false
-        end
-    end
+	-- Remove unnecessary files and folders
+	local files = { "requirements.txt", "README.md", "LICENSE", ".git" }
+	for _, file in ipairs(files) do
+		if vim.fn.filereadable(file) == 1 then
+			vim.notify(string.format("Removing file: %s", file), vim.log.levels.INFO)
+			os.remove(file)
+		elseif vim.fn.isdirectory(file) == 1 then
+			vim.notify(string.format("Removing directory: %s", file), vim.log.levels.INFO)
+			vim.fn.system(string.format("rm -rf %s", file))
+		end
+	end
 
-    -- Check and upgrade pip
-    local python_path = get_python_path()
-    local pip_upgrade_cmd = {python_path, "-m", "pip", "install", "--upgrade", "pip"}
+	vim.notify("RockyDocs project setup complete", vim.log.levels.INFO)
 
-    local pip_upgrade = vim.system(pip_upgrade_cmd, {
-        stdout = function(_, data)
-            vim.notify(data, vim.log.levels.INFO)
-        end,
-        stderr = function(_, data)
-            vim.notify(data, vim.log.levels.ERROR)
-        end,
-    })
-
-    local pip_result = pip_upgrade:wait()
-    if pip_result.code ~= 0 then
-        vim.notify("Failed to upgrade pip: " .. pip_result.stderr, vim.log.levels.WARN)
-        -- Continue even if pip upgrade fails
-    end
-
-    -- Install requirements
-    local requirements_file = template_folder .. "/requirements.txt"
-    local install_cmd = {python_path, "-m", "pip", "install", "-r", requirements_file}
-
-    local install = vim.system(install_cmd, {
-        stdout = function(_, data)
-            vim.notify(data, vim.log.levels.INFO)
-        end,
-        stderr = function(_, data)
-            vim.notify(data, vim.log.levels.ERROR)
-        end,
-    })
-
-    local install_result = install:wait()
-    if install_result.code ~= 0 then
-        vim.notify("Failed to install requirements: " .. install_result.stderr, vim.log.levels.ERROR)
-        return false
-    end
-
-    -- Clean up template folder
-    local cleanup_cmd = {"rm", "-rf", template_folder}
-    local cleanup = vim.system(cleanup_cmd)
-
-    local cleanup_result = cleanup:wait()
-    if cleanup_result.code ~= 0 then
-        vim.notify("Warning: Failed to remove template folder", vim.log.levels.WARN)
-    end
-
-    vim.notify("RockyDocs setup completed successfully!", vim.log.levels.INFO)
-    return true
+	return true
 end
 
 -- }}}
