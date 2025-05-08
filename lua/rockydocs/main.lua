@@ -1,7 +1,7 @@
 local M = {}
 
-local utils = require("nvim-rockydocs.utils")
-local configs = require("nvim-rockydocs.configs")
+local utils = require("rockydocs.utils")
+local configs = require("rockydocs.configs")
 
 -- Install MkDocs for RockyDocs Project {{{
 
@@ -16,49 +16,109 @@ function M.rockydocs()
 		return false
 	end
 
-	-- Clone the repository --
+	-- Clone the repository
 	local clone_cmd = "git clone https://github.com/ambaradan/rockydocs-template.git ."
-	vim.notify("Cloning repository...", vim.log.levels.INFO)
-	local clone_result = vim.fn.system(clone_cmd)
-
-	-- Check if cloning was successful
-	if vim.v.shell_error ~= 0 then
-		vim.notify("Failed to clone repository: " .. clone_result, vim.log.levels.ERROR)
-		return false
-	else
-		vim.notify("Successfully cloned repository", vim.log.levels.INFO)
-
-		-- Install requirements
-		local pip_cmd = utils.get_python_path() .. " -m pip install -r requirements.txt"
-		vim.notify("Installing requirements...", vim.log.levels.INFO)
-		local install_result = vim.fn.system(pip_cmd)
-
-		-- Check if installation was successful
-		if vim.v.shell_error ~= 0 then
-			vim.notify("Failed to install requirements: " .. install_result, vim.log.levels.ERROR)
-			return false
-		else
-			vim.notify("Successfully installed requirements", vim.log.levels.INFO)
-
-			-- Remove unnecessary files and folders
-			local files = { "requirements.txt", "README.md", "LICENSE", ".git" }
-
-			-- Iterate through each file to remove
-			for _, file in ipairs(files) do
-				-- Check if the file or directory exists before attempting to remove it
-				if vim.fn.filereadable(file) == 1 then
-					-- If it's a file, proceed with removal as before
-					io.open(file, "r"):close()
-					os.remove(file)
-				elseif vim.fn.isdirectory(file) == 1 then
-					-- If it's a directory, recursively remove it using the `rm` command
-					vim.fn.system("rm -rf " .. file)
-				end
+	local clone_job = vim.fn.jobstart(clone_cmd, {
+		on_stdout = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.INFO)
 			end
+		end,
+		on_stderr = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.ERROR)
+			end
+		end,
+	})
 
-			return true
+	-- Wait for the clone job to finish
+	local clone_status = vim.fn.jobwait({ clone_job })
+	if clone_status[1] ~= -1 then
+		if clone_status[1] ~= 0 then
+			local error_message = "Failed to clone repository. Please check the error message above for more details."
+			if clone_status[2] then
+				error_message = string.format(
+					"Failed to clone repository. Error code: %d. Error message: %s",
+					clone_status[1],
+					clone_status[2]
+				)
+			end
+			vim.notify(error_message, vim.log.levels.ERROR)
+			return
+		elseif vim.fn.system("git rev-parse --git-dir") ~= "" then
+			vim.notify("Repository cloned successfully", vim.log.levels.INFO)
+		else
+			vim.notify(
+				"Failed to clone repository. The current directory is not a git repository.",
+				vim.log.levels.ERROR
+			)
+			return
+		end
+	else
+		vim.notify("Failed to clone repository. The job is still running.", vim.log.levels.ERROR)
+		return
+	end
+
+	-- Check if pip is up to date
+	local python_path = utils.get_python_path()
+	local pip_upgrade_cmd = string.format("%s -m pip install --upgrade pip", python_path)
+	local pip_upgrade_job = vim.fn.jobstart(pip_upgrade_cmd, {
+		on_stdout = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.INFO)
+			end
+		end,
+		on_stderr = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.ERROR)
+			end
+		end,
+	})
+
+	-- Wait for the pip upgrade job to finish
+	local pip_upgrade_status = vim.fn.jobwait({ pip_upgrade_job })
+	if pip_upgrade_status[1] ~= -1 then
+		if pip_upgrade_status[1] == 0 then
+			vim.notify("pip upgraded successfully", vim.log.levels.INFO)
+		else
+			vim.notify("Failed to upgrade pip", vim.log.levels.ERROR)
+			return
 		end
 	end
+
+	-- Install requirements
+	local install_cmd = python_path .. " -m pip install --quiet -r requirements.txt"
+	local install_job = vim.fn.jobstart(install_cmd, {
+		on_stdout = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.INFO)
+			end
+		end,
+		on_stderr = function(_, data)
+			for _, line in ipairs(data) do
+				vim.notify(line, vim.log.levels.ERROR)
+			end
+		end,
+	})
+
+	-- Wait for the install job to finish
+	vim.fn.jobwait({ install_job })
+
+	-- Remove unnecessary files and folders
+	local files = { "requirements.txt", "README.md", "LICENSE", ".git" }
+	for _, file in ipairs(files) do
+		if vim.fn.filereadable(file) == 1 then
+			vim.notify(string.format("Removing file: %s", file), vim.log.levels.INFO)
+			os.remove(file)
+		elseif vim.fn.isdirectory(file) == 1 then
+			vim.notify(string.format("Removing directory: %s", file), vim.log.levels.INFO)
+			vim.fn.system(string.format("rm -rf %s", file))
+		end
+	end
+
+	vim.notify("RockyDocs project setup complete", vim.log.levels.INFO)
+
+	return true
 end
 
 -- }}}

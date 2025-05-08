@@ -1,13 +1,13 @@
 local M = {}
 
-local config = require("nvim-rockydocs.configs").config
-local state = require("nvim-rockydocs.configs").state
+local config = require("rockydocs.configs").config
+local state = require("rockydocs.configs").state
 
 -- common utilities {{{
 
 -- Function to activate the virtual environment for Mkdocs commands
 function M.activate_venv()
-	-- Check if the virtual environment is not active -
+	-- Check if the virtual environment is not active
 	if not M.venv_is_active() then
 		-- If not active, activate the virtual environment
 		M.activate()
