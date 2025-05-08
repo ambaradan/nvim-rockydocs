@@ -21,7 +21,7 @@ function M.rockydocs()
 	else
 		vim.notify("Successfully cloned repository", vim.log.levels.INFO)
 		-- Install requirements
-		local pip_cmd = utils.get_python_path() .. " -m pip install --quiet --disable-pip-version-check -r requirements.txt"
+		local pip_cmd = utils.get_python_path() .. " -m pip install -r requirements.txt  --quiet --disable-pip-version-check"
 		vim.notify("Installing requirements...", vim.log.levels.INFO)
 		local install_result = vim.fn.system(pip_cmd)
 		if vim.v.shell_error ~= 0 then
