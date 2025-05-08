@@ -17,7 +17,7 @@ function M.rockydocs()
 	end
 
 	-- Clone the repository
-	local clone_cmd = "git clone https://github.com/ambaradan/rockydocs-template.git ."
+	local clone_cmd = "git clone https://github.com/ambaradan/rockydocs-template.git $(pwd)"
 	local clone_job = vim.fn.jobstart(clone_cmd, {
 		on_stdout = function(_, data)
 			for _, line in ipairs(data) do
