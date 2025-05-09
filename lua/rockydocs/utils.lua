@@ -342,4 +342,68 @@ end
 
 -- }}}
 
+-- Open RockyDocs Environment in browser {{{
+
+-- This function is responsible for opening the MkDocs browser.
+function M.open_mkdocs_browser()
+	-- Check if a server is running and we have a port
+	if not state.current_server_port then
+		-- If there is no server running, notify the user and return false
+		vim.notify("No MkDocs server is currently running", vim.log.levels.WARN)
+		return false
+	end
+
+	-- Construct the URL to open the MkDocs server
+	local url = string.format("http://localhost:%d", state.current_server_port)
+
+	-- Detect the operating system and choose the appropriate command to open the browser
+	local open_cmd
+	local os_command = vim.fn.system("uname -s"):gsub("\n", "")
+
+	-- If the operating system is macOS, use the 'open' command
+	if os_command == "Darwin" then
+		open_cmd = string.format("open %s", url)
+	-- If the operating system is Linux, try different browser commands
+	elseif os_command == "Linux" then
+		local browsers = {
+			"xdg-open",
+			"gnome-open",
+			"kde-open",
+			"x-www-browser",
+			"firefox",
+			"google-chrome",
+			"chromium",
+		}
+
+		-- Try each browser command until one is found that is executable
+		for _, browser in ipairs(browsers) do
+			if vim.fn.executable(browser) == 1 then
+				open_cmd = string.format("%s %s", browser, url)
+				break
+			end
+		end
+	-- If the operating system is Windows, use the 'start' command
+	elseif os_command:match("MINGW") or os_command:match("MSYS") or os_command:match("Windows") then
+		open_cmd = string.format("start %s", url)
+	end
+
+	-- Execute the command to open the browser
+	if open_cmd then
+		local result = vim.fn.system(open_cmd)
+		if vim.v.shell_error ~= 0 then
+			-- If the command failed, notify the user and return false
+			vim.notify(string.format("Failed to open browser: %s", result), vim.log.levels.ERROR)
+			return false
+		else
+			-- If the command succeeded, notify the user and return true
+			vim.notify(string.format("Opening MkDocs at %s", url), vim.log.levels.INFO)
+			return true
+		end
+	else
+		-- If we couldn't determine a browser to open the URL, notify the user and return false
+		vim.notify("Could not determine browser to open URL", vim.log.levels.ERROR)
+		return false
+	end
+end
+
 return M
