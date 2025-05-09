@@ -21,7 +21,8 @@ function M.rockydocs()
 	else
 		vim.notify("Successfully cloned repository", vim.log.levels.INFO)
 		-- Install requirements
-		local pip_cmd = utils.get_python_path() .. " -m pip install -r requirements.txt"
+		local pip_cmd = utils.get_python_path()
+			.. " -m pip install -r requirements.txt --quiet --disable-pip-version-check"
 		vim.notify("Installing requirements...", vim.log.levels.INFO)
 		local install_result = vim.fn.system(pip_cmd)
 		if vim.v.shell_error ~= 0 then
@@ -80,7 +81,7 @@ function M.serve(opts)
 		port = configs.config.mkdocs_server.default_port
 	end
 
-	local cmd = string.format("%s -m mkdocs serve -a localhost:%d", utils.get_python_path(), port)
+	local cmd = string.format("%s -m mkdocs serve -q -a localhost:%d", utils.get_python_path(), port)
 
 	vim.notify(string.format("Starting RockyDocs server on port %d...", port), vim.log.levels.INFO)
 
