@@ -169,3 +169,90 @@ To use these PyVenv commands, you can execute them in Neovim using the `:PyVenv<
 - :*PyVenvRemove* to remove the virtual environment
 
 These PyVenv commands provide a convenient way to manage Python virtual environments directly within Neovim, making it easier to work with the "nvim-rockydocs" plugin and other projects that require virtual environments.
+
+## Creating a Rocky Linux Documentation Environment with nvim-rockydocs
+
+Creating a Rocky Linux documentation environment is a straightforward process that involves a few key steps. Begin by setting up a dedicated project folder, which will serve as the foundation for your documentation efforts.  
+Next, launch nvim, a powerful and flexible text editor, within this folder. From there, create a Python virtual environment to isolate your project's dependencies and ensure seamless execution.  
+Activate this environment to enable the installation of necessary packages, including mkdocs and mkdocs-material, which are essential for building and publishing your documentation. Once these components are in place, verify that your setup is complete and functional by running a status check.
+
+By following these simple steps, you can quickly establish a robust and efficient documentation environment using nvim-rockydocs.
+
+**Step 1**: Create an empty Project Folder
+
+To start, create an empty folder for your project. This folder will serve as the root directory for your documentation environment. You can create the folder using the `mkdir` command in the terminal:
+
+```bash
+mkdir my-rocky-docs
+```
+
+Replace my-rocky-docs with the name of your choice for the project folder.
+
+**Step 2**: Navigate into the Project Folder and launch nvim
+
+Navigate into the newly created project folder and launch nvim:
+
+```bash
+cd my-rocky-docs
+nvim
+```
+
+This will open nvim in the project folder, ready for further setup.
+
+**Step 3**: Create a Python Virtual Environment
+
+Use PyVenCreate to create a Python virtual environment within your project folder. This ensures that your documentation environment's dependencies do not conflict with the system-wide Python environment:
+
+```text
+:PyVenCreate
+```
+
+This command creates a virtual environment named `.venv` in your project folder.
+
+**Step 4**: Activate the Virtual Environment
+
+Activate the virtual environment using PyVenvActivate. This step is crucial as it allows you to install packages specific to your project without affecting the system Python environment:
+
+```text
+:PyVenvActivate
+```
+
+**Step 5**: Install Necessary Packages and Prepare the Project Structure
+
+With the virtual environment activated, use RockyDocsSetup to install mkdocs and mkdocs-material using Python pip, and prepare the basic structure for your documentation project:
+
+```text
+:RockyDocsSetup
+```
+
+This command installs the required packages and sets up the initial directory structure for your documentation project, including the basic configuration for mkdocs in `mkdocs.yml`.
+
+**Step 6**: Check the Status of the Setup
+
+Finally, to ensure that everything is correctly set up and ready for use, run the RockyDocsStatus command:
+
+```text
+:RockyDocsStatus
+```
+
+This command checks the environment, virtual environment, installed packages, and project structure, providing feedback on whether the setup is successful and ready for documentation work.
+
+By following these steps, you have successfully created a Rocky Linux documentation environment using nvim-rockydocs. This environment is now ready for you to create, manage, and publish your documentation projects efficiently, utilizing the powerful features of mkdocs and the convenience of nvim for editing and managing the documents.
+
+## Utilizing Rocky Linux Documentation Environment for daily use
+
+After setting up the Rocky Linux documentation environment with *nvim-rockydocs*, it's time to explore its daily use. This involves a seamless workflow that includes launching the mkdocs server, editing documentation, and stopping the server when finished.
+
+### Launching the Mkdocs Server
+
+To start working on your documentation, use the `:RockyDocsServe` command within *nvim*. This command launches the mkdocs server, making your documentation available for preview at `http://localhost:8000`. With the server running, you can edit your documentation files, and the changes will be reflected in real-time in your web browser.
+
+### Editing Documentation
+
+While the mkdocs server is running, you can freely edit your documentation files using nvim. Take advantage of nvim powerful editing features, such as syntax highlighting, auto-completion, and version control integration, to efficiently create and refine your documentation. As you save changes to your files, the mkdocs server will automatically rebuild your documentation site, allowing you to preview the updated content in your browser.
+
+### Stopping the Mkdocs Server
+
+Once you've completed your editing tasks, it's essential to stop the mkdocs server to free up system resources. Use the `:RockyDocsStop` command to gracefully stop the server. This ensures that the server process is terminated cleanly, preventing any potential issues or conflicts with other system processes.
+
+By following this workflow, you can efficiently create, edit, and publish high-quality documentation using the Rocky Linux documentation environment with nvim-rockydocs.
