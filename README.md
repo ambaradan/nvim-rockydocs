@@ -256,3 +256,30 @@ While the mkdocs server is running, you can freely edit your documentation files
 Once you've completed your editing tasks, it's essential to stop the mkdocs server to free up system resources. Use the `:RockyDocsStop` command to gracefully stop the server. This ensures that the server process is terminated cleanly, preventing any potential issues or conflicts with other system processes.
 
 By following this workflow, you can efficiently create, edit, and publish high-quality documentation using the Rocky Linux documentation environment with nvim-rockydocs.
+
+## Utilizing RockyDocsBuild for Sharing Documentation
+
+While the primary focus of the Rocky Linux documentation environment is on creating, editing, and mainly previewing documentation, there may be instances where you need to build your documentation for a more polished preview.  
+Although building and deploying documentation is outside the initial scope of the project, nvim-rockydocs provides a useful command, `:RockyDocsBuild`, to help facilitate this process.
+
+### Building Documentation for Preview
+
+The `:RockyDocsBuild` command leverages mkdocs built-in functionality to generate a static HTML site from your documentation files. This resulting site can be used for a more comprehensive preview of your documentation, allowing you to see how it will look when finalized.  
+When you run `:RockyDocsBuild`, mkdocs compiles your documentation into a fully functional website, complete with navigation, search functionality, and styling based on the mkdocs-material theme.
+
+### Use Cases for RockyDocsBuild
+
+Although not the primary intention of the project, using `:RockyDocsBuild` can be beneficial in several scenarios:
+
+- **Comprehensive Preview**: After making significant changes or additions to your documentation, building the site provides a thorough preview of how the documentation will appear.
+- **Testing**: Before sharing or deploying your documentation, building it with :RockyDocsBuild allows you to test links, images, and other media to ensure they are correctly referenced.
+- **Localization and Theme Testing**: If you're using custom themes or localization, building your documentation helps verify that these aspects are correctly implemented.
+
+The `:RockyDocsBuild` command offers a straightforward way to build your documentation for a comprehensive preview. This feature can be particularly useful for testing, verification, and quality assurance of your documentation projects before commit.
+
+> [!NOTE]
+> The :RockyDocsBuild command generates a static HTML site from your documentation files, which is specifically designed for deployment on a web server, rather than for local browsing. This built version of your documentation is ready to be uploaded to a web server, where it can be served to users.
+
+## Conclusions
+
+The Rocky Linux documentation environment, powered by nvim-rockydocs, has been meticulously designed to facilitate the creation, editing, and previewing of high-quality documentation for Rocky Linux contributions. By providing a streamlined and intuitive workflow, this environment aims to empower contributors to focus on what matters most: **creating valuable content that enhances the Rocky Linux ecosystem**.
