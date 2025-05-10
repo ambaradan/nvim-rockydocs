@@ -133,15 +133,15 @@ The following RockyDocs commands are available:
 - **RockyDocsBuild**: This command builds the documentation project using MkDocs. It activates the virtual environment, checks if MkDocs is installed, and builds the documentation.
 - **RockyDocsStatus**: This command displays the status of the documentation project, including whether a virtual environment is active, whether MkDocs is installed, and whether the server is running.
 
-Usage
+### Usage
 
 To use these RockyDocs commands, you can execute them in Neovim using the `:RockyDocs<Command>` syntax. For example:
 
-- :RockyDocsSetup to set up a new RockyDocs project
-- :RockyDocsServe to serve the documentation project
-- :RockyDocsStop to stop the MkDocs server
-- :RockyDocsBuild to build the documentation project
-- :RockyDocsStatus to display the project status
+- :*RockyDocsSetup* to set up a new RockyDocs project
+- :*RockyDocsServe* to serve the documentation project
+- :*RockyDocsStop* to stop the MkDocs server
+- :*RockyDocsBuild* to build the documentation project
+- :*RockyDocsStatus* to display the project status
 
 These RockyDocs commands provide a convenient way to manage documentation projects for the Rocky Linux Documentation Project, making it easier to create, edit, and deploy high-quality documentation.
 
@@ -158,14 +158,14 @@ The following PyVenv commands are available as utilities in the "nvim-rockydocs"
 - **PyVenvStatus**: This command displays the status of the virtual environment, including whether it is active, the Python version, and the path to the virtual environment.
 - **PyVenvRemove**: This command removes the virtual environment for the current project.
 
-Usage
+### Usage
 
 To use these PyVenv commands, you can execute them in Neovim using the `:PyVenv<Command>` syntax. For example:
 
-- :PyVenvCreate to create a new virtual environment
-- :PyVenvActivate to activate the virtual environment
-- :PyVenvDeactivate to deactivate the virtual environment
-- :PyVenvStatus to display the virtual environment status
-- :PyVenvRemove to remove the virtual environment
+- :*PyVenvCreate* to create a new virtual environment
+- :*PyVenvActivate* to activate the virtual environment
+- :*PyVenvDeactivate* to deactivate the virtual environment
+- :*PyVenvStatus* to display the virtual environment status
+- :*PyVenvRemove* to remove the virtual environment
 
 These PyVenv commands provide a convenient way to manage Python virtual environments directly within Neovim, making it easier to work with the "nvim-rockydocs" plugin and other projects that require virtual environments.
