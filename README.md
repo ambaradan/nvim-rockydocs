@@ -201,7 +201,7 @@ This will open nvim in the project folder, ready for further setup.
 
 **Step 3**: Create a Python Virtual Environment
 
-Use PyVenCreate to create a Python virtual environment within your project folder. This ensures that your documentation environment's dependencies do not conflict with the system-wide Python environment:
+Use PyVenvCreate to create a Python virtual environment within your project folder. This ensures that your documentation environment's dependencies do not conflict with the system-wide Python environment:
 
 ```text
 :PyVenCreate
