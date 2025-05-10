@@ -257,7 +257,7 @@ Once you've completed your editing tasks, it's essential to stop the mkdocs serv
 
 By following this workflow, you can efficiently create, edit, and publish high-quality documentation using the Rocky Linux documentation environment with nvim-rockydocs.
 
-## Utilizing RockyDocsBuild for Sharing Documentation
+## Utilizing RockyDocsBuild for Previewing Documentation
 
 While the primary focus of the Rocky Linux documentation environment is on creating, editing, and mainly previewing documentation, there may be instances where you need to build your documentation for a more polished preview.  
 Although building and deploying documentation is outside the initial scope of the project, nvim-rockydocs provides a useful command, `:RockyDocsBuild`, to help facilitate this process.
