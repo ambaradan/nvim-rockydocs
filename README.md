@@ -33,14 +33,14 @@ By using *nvim-rockydocs*, contributors can benefit from:
 
 ### Getting Started
 
-Once installed, explore the various commands and features to discover how *nvim-rockydocs* can enhance your documentation workflow for Rocky Linux.  
-With nvim-rockydocs, contribute to the Rocky Linux Documentation Project with ease, and help create high-quality documentation that benefits
+Once installed, explore the various commands and features to discover how *nvim-rockydocs* can enhance your documentation workflow for *Rocky Linux*.  
+With nvim-rockydocs, contribute to the [Rocky Linux Documentation Project](https://docs.rockylinux.org/) with ease, and help create high-quality documentation that benefits
 
 ## Installing nvim-rockydocs with lazy.nvim
 
 **Step 1**: Add nvim-rockydocs to your lazy.nvim configuration
 
-In your Neovim configuration file (usually init.lua), add the following line to your lazy.nvim setup:
+In your Neovim configuration file (usually `plugins/init.lua`), add the following line to your *lazy.nvim* setup:
 
 ```lua
 { 'ambaradan/nvim-rockydocs' }
@@ -86,10 +86,9 @@ The use of packadd by nvim-rockydocs eliminates the need for explicit configurat
 > Note about the `packadd` feature
 > The packadd command is a feature in Neovim that allows users to load plugins on demand, rather than during Neovim startup. This provides a more efficient and flexible way to manage plugins, as it enables users to load only the plugins they need for a specific task or project.
 
-### Configuring Mkdocs Serve port in nvim-rockydocs
+### Configuring `mkdocs serve` port in nvim-rockydocs
 
-One of the key features of Mkdocs is the ability to serve your documentation locally for preview and testing purposes. By default, Mkdocs serves the site on port 8000. However, users may need to change this port due to various reasons such as port conflicts or specific project requirements.
-
+One of the key features of Mkdocs is the ability to serve your documentation locally for preview and testing purposes. By default, Mkdocs serves the site on port 8000. However, users may need to change this port due to various reasons such as port conflicts or specific project requirements.  
 To change the default port used by Mkdocs when serving your documentation, you can specify the port in the `require("rockydocs").setup()` function. This function is used to configure nvim-rockydocs to allow setting the Mkdocs serve port.
 
 Here is an example configuration snippet that demonstrates how to set the Mkdocs serve port to 8001:
@@ -108,22 +107,21 @@ In this example, replace 8001 with the port number you wish to use. After settin
 
 The PATH environment variable is a crucial component in the plugin nvim-rockydocs as it allows you to specify the location of the language server executables within the virtual environment. This ensures that the plugin can access and utilize the language servers during documentation generation, providing accurate and up-to-date information for your projects.
 
-When start the language server, nvim-rockydocs uses the PATH environment variable to locate the language server executable. The plugin executes the language server using the vim.fn.system function, which searches for the executable in the directories specified in the PATH variable.
+When start the language server, nvim-rockydocs uses the PATH environment variable to locate the language server executable. The plugin executes the language server using the `vim.fn.system` function, which searches for the executable in the directories specified in the PATH variable.
 
 #### Using preserved_paths in configs.lua
 
-The preserved_paths option in configs.lua is used to specify a list of directories that should be preserved in the PATH environment variable when using nvim-rockydocs with a language server installed with mason.nvim.
+The preserved_paths option in configs.lua is used to specify a list of directories that should be preserved in the PATH environment variable when using nvim-rockydocs with a language server installed with *mason.nvim*.
 
 The purpose of preserved_paths is to ensure that certain directories are always included in the PATH environment variable, even when nvim-rockydocs is running. This is useful when you have other tools or executables that need to be accessed from the PATH environment variable.  
 When nvim-rockydocs starts, it sets the PATH environment variable to the value specified in the path option. However, if preserved_paths is set, nvim-rockydocs will also append the directories specified in preserved_paths to the PATH environment variable.
 
-This ensures that the directories specified in preserved_paths are always included in the PATH environment variable, even when nvim-rockydocs is running.
-
+This ensures that the directories specified in preserved_paths are always included in the PATH environment variable, even when nvim-rockydocs is running.  
 By using preserved_paths you can ensure that certain directories are always included in the PATH environment variable, even when using nvim-rockydocs with a language server installed with `mason.nvim`.
 
 ## RockyDocs Commands
 
-The "nvim-rockydocs" plugin provides a set of commands under the "RockyDocs" namespace, which are designed to streamline the documentation workflow for the Rocky Linux Documentation Project. These commands are the primary features of the plugin and are used to serve, build, and manage documentation projects.
+The "nvim-rockydocs" plugin provides a set of commands under the "RockyDocs" namespace, which are designed to streamline the documentation workflow for the Rocky Linux Documentation Project. These commands are the primary features of the plugin and are used to setup, serve, build, and browse the documentation projects.
 
 The following RockyDocs commands are available:
 
