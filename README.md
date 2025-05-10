@@ -132,6 +132,7 @@ The following RockyDocs commands are available:
 - **RockyDocsStop**: This command stops the currently running MkDocs server.
 - **RockyDocsBuild**: This command builds the documentation project using MkDocs. It activates the virtual environment, checks if MkDocs is installed, and builds the documentation.
 - **RockyDocsStatus**: This command displays the status of the documentation project, including whether a virtual environment is active, whether MkDocs is installed, and whether the server is running.
+- **RockyDocsOpen**: This command open the RockyDocs documentation in the default web browser. This command is a convenient way to preview the documentation while you're working on it.
 
 ### Usage
 
@@ -139,6 +140,7 @@ To use these RockyDocs commands, you can execute them in Neovim using the `:Rock
 
 - :*RockyDocsSetup* to set up a new RockyDocs project
 - :*RockyDocsServe* to serve the documentation project
+- :*RockyDocsOpen* to browse the documentation project
 - :*RockyDocsStop* to stop the MkDocs server
 - :*RockyDocsBuild* to build the documentation project
 - :*RockyDocsStatus* to display the project status
