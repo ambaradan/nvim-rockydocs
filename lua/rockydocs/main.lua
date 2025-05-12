@@ -11,42 +11,120 @@ function M.rockydocs()
 		vim.notify("Please activate a virtual environment first", vim.log.levels.ERROR)
 		return false
 	end
-	-- Clone the repository
-	local clone_cmd = "git clone https://github.com/ambaradan/rockydocs-template.git ."
-	vim.notify("Cloning repository...", vim.log.levels.INFO)
-	local clone_result = vim.fn.system(clone_cmd)
-	if vim.v.shell_error ~= 0 then
-		vim.notify("Failed to clone repository: " .. clone_result, vim.log.levels.ERROR)
-		return false
-	else
-		vim.notify("Successfully cloned repository", vim.log.levels.INFO)
-		-- Install requirements
-		local pip_cmd = utils.get_python_path()
-			.. " -m pip install -r requirements.txt --quiet --disable-pip-version-check"
-		vim.notify("Installing requirements...", vim.log.levels.INFO)
-		local install_result = vim.fn.system(pip_cmd)
-		if vim.v.shell_error ~= 0 then
-			vim.notify("Failed to install requirements: " .. install_result, vim.log.levels.ERROR)
-			return false
-		else
-			vim.notify("Successfully installed requirements", vim.log.levels.INFO)
-			-- Remove requirements.txt, README.md, and .git folder silently
-			local files = { "requirements.txt", "README.md", "LICENSE", ".git" }
 
-			for _, file in ipairs(files) do
-				-- Check if the file or directory exists before attempting to remove it
-				if vim.fn.filereadable(file) == 1 then
-					-- If it's a file, proceed with removal as before
-					io.open(file, "r"):close()
-					os.remove(file)
-				elseif vim.fn.isdirectory(file) == 1 then
-					-- If it's a directory, recursively remove it using the `rm` command
-					vim.fn.system("rm -rf " .. file)
-				end
-			end
-			return true
+	-- Create buffer for all output
+	local buf = vim.api.nvim_create_buf(false, true)
+	local win = vim.api.nvim_open_win(buf, true, {
+		relative = "editor",
+		width = 80,
+		height = 20,
+		col = (vim.o.columns - 80) / 2,
+		row = (vim.o.lines - 20) / 2,
+		style = "minimal",
+		border = "rounded",
+		title = "RockyDocs Setup",
+		title_pos = "center",
+	})
+
+	local lines = { "Starting RockyDocs setup..." }
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+	local function append_to_buffer(new_lines)
+		if type(new_lines) == "string" then
+			new_lines = { new_lines }
 		end
+
+		for _, line in ipairs(new_lines) do
+			if line ~= "" then
+				table.insert(lines, line)
+			end
+		end
+
+		vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+		vim.api.nvim_win_set_cursor(win, { #lines, 0 })
 	end
+
+	append_to_buffer("Cloning repository...")
+
+	-- Clone the repository
+	vim.fn.jobstart("git clone https://github.com/ambaradan/rockydocs-template.git .", {
+		on_stdout = function(_, data)
+			append_to_buffer(data)
+		end,
+		on_stderr = function(_, data)
+			append_to_buffer(data)
+		end,
+		on_exit = function(_, exit_code)
+			if exit_code ~= 0 then
+				append_to_buffer({
+					"",
+					"✖ Failed to clone repository",
+					"Exit code: " .. tostring(exit_code),
+				})
+				vim.notify("Failed to clone repository", vim.log.levels.ERROR)
+				return
+			end
+
+			append_to_buffer({
+				"",
+				"✔ Successfully cloned repository",
+				"",
+				"Installing requirements...",
+			})
+
+			-- Install requirements
+			local pip_cmd = utils.get_python_path() .. " -m pip install -r requirements.txt --disable-pip-version-check"
+
+			vim.fn.jobstart(pip_cmd, {
+				on_stdout = function(_, data)
+					append_to_buffer(data)
+				end,
+				on_stderr = function(_, data)
+					append_to_buffer(data)
+				end,
+				on_exit = function(_, pip_exit_code)
+					if pip_exit_code ~= 0 then
+						append_to_buffer({
+							"",
+							"✖ Failed to install requirements",
+							"Exit code: " .. tostring(pip_exit_code),
+						})
+						vim.notify("Failed to install requirements", vim.log.levels.ERROR)
+					else
+						append_to_buffer({
+							"",
+							"✔ Successfully installed requirements",
+							"",
+							"RockyDocs environment ready!",
+							"Use :RockydocsServe to run it",
+						})
+						vim.notify("RockyDocs setup completed", vim.log.levels.INFO)
+					end
+
+					-- Cleanup files
+					local files = { "requirements.txt", "README.md", "LICENSE", ".git" }
+					for _, file in ipairs(files) do
+						if vim.fn.filereadable(file) == 1 then
+							os.remove(file)
+						elseif vim.fn.isdirectory(file) == 1 then
+							vim.fn.jobstart("rm -rf " .. file, { detach = true })
+						end
+					end
+
+					-- Close window after delay
+					vim.defer_fn(function()
+						if vim.api.nvim_win_is_valid(win) then
+							vim.api.nvim_win_close(win, true)
+						end
+					end, 5000)
+				end,
+				cwd = vim.fn.getcwd(),
+			})
+		end,
+		cwd = vim.fn.getcwd(),
+	})
+
+	return true
 end
 
 -- }}}
