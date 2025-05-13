@@ -5,6 +5,14 @@ local configs = require("rockydocs.configs")
 
 -- Install MkDocs for RockyDocs Project {{{
 
+---@desc Initializes and sets up a RockyDocs environment by:
+---@desc 1. Checking for an active virtual environment
+---@desc 2. Creating a visual buffer for setup progress
+---@desc 3. Cloning the RockyDocs template repository
+---@desc 4. Installing Python requirements
+---@desc 5. Cleaning up temporary files
+---@desc 6. Providing user feedback throughout the process
+---@return boolean True if setup initiated successfully, false if virtual env not active
 function M.rockydocs()
 	-- Check if the virtual environment is active
 	if not utils.venv_is_active() then
@@ -12,7 +20,7 @@ function M.rockydocs()
 		return false
 	end
 
-	-- Create buffer for all output
+	---@desc Creates a centered floating window buffer for setup output
 	local buf = vim.api.nvim_create_buf(false, true)
 	local win = vim.api.nvim_open_win(buf, true, {
 		relative = "editor",
@@ -29,6 +37,8 @@ function M.rockydocs()
 	local lines = { "Starting RockyDocs setup..." }
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
+	---@desc Appends new lines to the output buffer
+	---@param new_lines string|table The content to append (string or table of strings)
 	local function append_to_buffer(new_lines)
 		if type(new_lines) == "string" then
 			new_lines = { new_lines }
@@ -46,7 +56,7 @@ function M.rockydocs()
 
 	append_to_buffer("Cloning repository...")
 
-	-- Clone the repository
+	---@desc Clones the RockyDocs template repository
 	vim.fn.jobstart("git clone https://github.com/ambaradan/rockydocs-template.git .", {
 		on_stdout = function(_, data)
 			append_to_buffer(data)
@@ -72,7 +82,7 @@ function M.rockydocs()
 				"Installing requirements...",
 			})
 
-			-- Install requirements
+			---@desc Installs Python dependencies from requirements.txt
 			local pip_cmd = utils.get_python_path() .. " -m pip install -r requirements.txt --disable-pip-version-check"
 
 			vim.fn.jobstart(pip_cmd, {
@@ -101,7 +111,7 @@ function M.rockydocs()
 						vim.notify("RockyDocs setup completed", vim.log.levels.INFO)
 					end
 
-					-- Cleanup files
+					---@desc Cleans up temporary files after setup
 					local files = { "requirements.txt", "README.md", "LICENSE", ".git" }
 					for _, file in ipairs(files) do
 						if vim.fn.filereadable(file) == 1 then
@@ -111,7 +121,7 @@ function M.rockydocs()
 						end
 					end
 
-					-- Close window after delay
+					---@desc Closes the setup window after 5 seconds
 					vim.defer_fn(function()
 						if vim.api.nvim_win_is_valid(win) then
 							vim.api.nvim_win_close(win, true)
