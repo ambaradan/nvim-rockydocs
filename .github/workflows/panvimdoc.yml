@@ -1,0 +1,35 @@
+name: panvimdoc
+on: [push]
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    name: pandoc to vimdoc
+    steps:
+      - uses: actions/checkout@v2
+      - name: panvimdoc
+        uses: kdheepak/panvimdoc@main
+        with:
+          # Output vimdoc project name (required)
+          vimdoc: rockydocs
+          # The following are all optional
+          pandoc: "README.md" # Input pandoc file
+          version: "NVIM v0.11.0" # Vim version number
+          toc: true # Table of contents
+          # Project description used in title
+          # (if empty, uses neovim version and current date)
+          description: ""
+          # Pattern for the date that used in the title
+          titledatepattern: "%Y %B %d"
+          demojify: false # Strip emojis from the vimdoc
+          # Add heading to subheading anchor links to ensure
+          # that subheadings are unique
+          dedupsubheadings: true
+          treesitter: true # Use treesitter for highlighting codeblocks
+          # Ignore raw html blocks in markdown when converting to vimdoc
+          ignorerawblocks: true
+          docmapping: false # Use h4 headers as mapping docs
+          # Use project name in tag when writing mapping docs
+          docmappingprojectname: true
+          shiftheadinglevelby: 0 # Shift heading levels by specified number
+          # Increment heading levels by specified number
+          incrementheadinglevelby: 0
