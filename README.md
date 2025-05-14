@@ -467,6 +467,8 @@ projects before commit.
 > documentation is ready to be uploaded to a web server, where it can be served
 > to users.
 
+<!-- panvimdoc-ignore-start -->
+
 # Conclusions
 
 The Rocky Linux documentation environment, powered by nvim-rockydocs, has been
@@ -475,3 +477,5 @@ high-quality documentation for Rocky Linux contributions. By providing a
 streamlined and intuitive workflow, this environment aims to empower
 contributors to focus on what matters most: **creating valuable content that
 enhances the Rocky Linux ecosystem**.
+
+<!-- panvimdoc-ignore-end -->
