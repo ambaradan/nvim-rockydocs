@@ -8,36 +8,10 @@ Table of Contents                                *rockydocs-table-of-contents*
 3. Configuration                                     |rockydocs-configuration|
 4. RockyDocs Commands                           |rockydocs-rockydocs-commands|
 5. PyVenv Commands                                 |rockydocs-pyvenv-commands|
-6. Creating a Rocky Linux Documentation Environment with nvim-rockydocs|rockydocs-creating-a-rocky-linux-documentation-environment-with-nvim-rockydocs|
+6. Creating the Environment               |rockydocs-creating-the-environment|
 
 ==============================================================================
 1. RockyDocs                                             *rockydocs-rockydocs*
-
-- |rockydocs-rockydocs-environment-for-neovim|
-    - |rockydocs-introduction-to-nvim-rockydocs-{#intro}|
-        - |rockydocs-key-features-{#key_features}|
-        - |rockydocs-purpose-{#purpose}|
-        - |rockydocs-benefits-{#benefits}|
-        - |rockydocs-getting-started-{#getting_started}|
-    - |rockydocs-installing-nvim-rockydocs-with-lazy.nvim|
-    - |rockydocs-installing-nvim-rockydocs-with-rocks.nvim|
-    - |rockydocs-configuration|
-        - |rockydocs-configuring-`mkdocs-serve`-port-in-nvim-rockydocs|
-        - |rockydocs-language-server-availability|
-            - |rockydocs-using-preserved_paths-in-configs.lua|
-    - |rockydocs-rockydocs-commands|
-        - |rockydocs-usage|
-    - |rockydocs-pyvenv-commands|
-        - |rockydocs-usage|
-    - |rockydocs-creating-a-rocky-linux-documentation-environment-with-nvim-rockydocs|
-    - |rockydocs-utilizing-rocky-linux-documentation-environment-for-daily-use|
-        - |rockydocs-launching-the-mkdocs-server|
-        - |rockydocs-editing-documentation|
-        - |rockydocs-stopping-the-mkdocs-server|
-    - |rockydocs-utilizing-rockydocsbuild-for-previewing-documentation|
-        - |rockydocs-building-documentation-for-preview|
-        - |rockydocs-use-cases-for-rockydocsbuild|
-    - |rockydocs-conclusions|
 
 
 INTRODUCTION TO NVIM-ROCKYDOCS ~
@@ -326,7 +300,7 @@ environments directly within Neovim, making it easier to work with the
 
 
 ==============================================================================
-6. Creating a Rocky Linux Documentation Environment with nvim-rockydocs*rockydocs-creating-a-rocky-linux-documentation-environment-with-nvim-rockydocs*
+6. Creating the Environment               *rockydocs-creating-the-environment*
 
 Creating a Rocky Linux documentation environment is a straightforward process
 that involves a few key steps. Begin by setting up a dedicated project folder,
