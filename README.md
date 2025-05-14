@@ -186,17 +186,12 @@ projects.
 The following RockyDocs commands are available:
 
 :RockyDocsSetup
+: This command sets up a new RockyDocs project by cloning the repository and installing the required dependencies. It checks if a virtual environment is active and installs the requirements using the pip package manager.
 
-: This command sets up a new RockyDocs project by cloning the repository and
-installing the required dependencies. It checks if a virtual environment is
-active and installs the requirements using the pip package manager.
-
-:RockyDocsServe
-
-: This command serves the documentation project using MkDocs. It activates the
-virtual environment, checks if MkDocs is installed, and starts the server in the
-background. The server can be stopped using the RockyDocsStop command.
-
+- **RockyDocsServe**: This command serves the documentation project using
+  MkDocs. It activates the virtual environment, checks if MkDocs is installed,
+  and starts the server in the background. The server can be stopped using the
+  RockyDocsStop command.
 - **RockyDocsStop**: This command stops the currently running MkDocs server.
 - **RockyDocsBuild**: This command builds the documentation project using
   MkDocs. It activates the virtual environment, checks if MkDocs is installed,
@@ -213,12 +208,29 @@ background. The server can be stopped using the RockyDocsStop command.
 To use these RockyDocs commands, you can execute them in Neovim using the
 `:RockyDocs<Command>` syntax. For example:
 
-- :*RockyDocsSetup* to set up a new RockyDocs project
-- :*RockyDocsServe* to serve the documentation project
-- :*RockyDocsOpen* to browse the documentation project
-- :*RockyDocsStop* to stop the MkDocs server
-- :*RockyDocsBuild* to build the documentation project
-- :*RockyDocsStatus* to display the project status
+:RockyDocsSetup
+
+: to set up a new RockyDocs project
+
+:RockyDocsServe
+
+: to serve the documentation project
+
+:RockyDocsOpen
+
+: to browse the documentation project
+
+:RockyDocsStop
+
+: to stop the MkDocs server
+
+: RockyDocsBuild
+
+: to build the documentation project
+
+:RockyDocsStatus
+
+: to display the project status
 
 These RockyDocs commands provide a convenient way to manage documentation
 projects for the Rocky Linux Documentation Project, making it easier to create,
