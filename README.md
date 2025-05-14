@@ -6,11 +6,11 @@ Nvim-rockydocs is a Neovim plugin designed to provide a dedicated interface for 
 
 ### Key Features
 
-- **Streamlined Documentation Workflow**: nvim-rockydocs offers a simplified workflow for writing and managing documentation, ensuring that contributors can focus on content creation.
-- **MkDocs Integration**: The plugin integrates seamlessly with MkDocs, allowing for easy serving, building, and deployment of documentation.
-- **Virtual Environment Management**: Contributors can manage Python virtual environments directly within Neovim, ensuring reproducibility and isolation for documentation projects.
-- **Customizable**: The plugin supports customization options to adhere to the Rocky Linux documentation style and standards.
-- **Browser Preview**: Contributors can preview their documentation in real-time, ensuring accuracy and quality before publication.
+- Streamlined Documentation Workflow: nvim-rockydocs offers a simplified workflow for writing and managing documentation, ensuring that contributors can focus on content creation.
+- MkDocs Integration: The plugin integrates seamlessly with MkDocs, allowing for easy serving, building, and deployment of documentation.
+- Virtual Environment Management: Contributors can manage Python virtual environments directly within Neovim, ensuring reproducibility and isolation for documentation projects.
+- Customizable: The plugin supports customization options to adhere to the Rocky Linux documentation style and standards.
+- Browser Preview: Contributors can preview their documentation in real-time, ensuring accuracy and quality before publication.
 
 ### Purpose
 
