@@ -226,20 +226,14 @@ The following RockyDocs commands are available:
                                                  *rockydocs-:RockyDocsSetup*
 
 
-:RockyDocsSetup                        This command sets up a new RockyDocs project by cloning the repository and
-                                       installing the required dependencies. It checks if a virtual environment is
-                                       active and installs the requirements using the pip package manager.
-
-
-                                                 *rockydocs-:RockyDocsServe*
-
-
-:RockyDocsServe                        This command serves the documentation project using MkDocs. It activates the
-                                       virtual environment, checks if MkDocs is installed, and starts the server in the
-                                       background. The server can be stopped using the RockyDocsStop command.
+:RockyDocsSetup                        This command sets up a new RockyDocs project by cloning the repository and installing the required dependencies. It checks if a virtual environment is active and installs the requirements using the pip package manager.
 
 
 
+- **RockyDocsServe**: This command serves the documentation project using
+    MkDocs. It activates the virtual environment, checks if MkDocs is installed,
+    and starts the server in the background. The server can be stopped using the
+    RockyDocsStop command.
 - **RockyDocsStop**: This command stops the currently running MkDocs server.
 - **RockyDocsBuild**: This command builds the documentation project using
     MkDocs. It activates the virtual environment, checks if MkDocs is installed,
@@ -257,12 +251,37 @@ USAGE ~
 To use these RockyDocs commands, you can execute them in Neovim using the
 `:RockyDocs<Command>` syntax. For example:
 
-- :_RockyDocsSetup_ to set up a new RockyDocs project
-- :_RockyDocsServe_ to serve the documentation project
-- :_RockyDocsOpen_ to browse the documentation project
-- :_RockyDocsStop_ to stop the MkDocs server
-- :_RockyDocsBuild_ to build the documentation project
-- :_RockyDocsStatus_ to display the project status
+
+                                                 *rockydocs-:RockyDocsSetup*
+
+
+:RockyDocsSetup                        to set up a new RockyDocs project
+
+
+                                                 *rockydocs-:RockyDocsServe*
+
+
+:RockyDocsServe                        to serve the documentation project
+
+
+                                                  *rockydocs-:RockyDocsOpen*
+
+
+:RockyDocsOpen                         to browse the documentation project
+
+
+                                                  *rockydocs-:RockyDocsStop*
+
+
+:RockyDocsStop                         to stop the MkDocs server
+
+
+                                                *rockydocs-:RockyDocsStatus*
+
+
+:RockyDocsStatus                       to display the project status
+
+
 
 These RockyDocs commands provide a convenient way to manage documentation
 projects for the Rocky Linux Documentation Project, making it easier to create,
