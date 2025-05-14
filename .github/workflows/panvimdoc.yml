@@ -15,9 +15,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: kdheepak/panvimdoc@main
         with:
-          vimdoc: ${{ github.event.repository.name }}
+          vimdoc: rockydocs
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          vimdoc: rockydocs
           commit_message: "Auto generate docs"
           branch: ${{ github.head_ref }}
