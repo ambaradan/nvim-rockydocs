@@ -1,6 +1,34 @@
-# RockyDocs Environment for Neovim
+# RockyDocs
 
-## Introduction to nvim-rockydocs {#intro}
+<!--toc:start-->
+- [RockyDocs Environment for Neovim](#rockydocs-environment-for-neovim)
+    - [Introduction to nvim-rockydocs {#intro}](#introduction-to-nvim-rockydocs-intro)
+        - [Key Features {#key_features}](#key-features-keyfeatures)
+        - [Purpose {#purpose}](#purpose-purpose)
+        - [Benefits {#benefits}](#benefits-benefits)
+        - [Getting Started {#getting_started}](#getting-started-gettingstarted)
+    - [Installing nvim-rockydocs with lazy.nvim](#installing-nvim-rockydocs-with-lazynvim)
+    - [Installing nvim-rockydocs with rocks.nvim](#installing-nvim-rockydocs-with-rocksnvim)
+    - [Configuration](#configuration)
+        - [Configuring `mkdocs serve` port in nvim-rockydocs](#configuring-mkdocs-serve-port-in-nvim-rockydocs)
+        - [Language Server availability](#language-server-availability)
+            - [Using preserved_paths in configs.lua](#using-preservedpaths-in-configslua)
+    - [RockyDocs Commands](#rockydocs-commands)
+        - [Usage](#usage)
+    - [PyVenv Commands](#pyvenv-commands)
+        - [Usage](#usage)
+    - [Creating a Rocky Linux Documentation Environment with nvim-rockydocs](#creating-a-rocky-linux-documentation-environment-with-nvim-rockydocs)
+    - [Utilizing Rocky Linux Documentation Environment for daily use](#utilizing-rocky-linux-documentation-environment-for-daily-use)
+        - [Launching the Mkdocs Server](#launching-the-mkdocs-server)
+        - [Editing Documentation](#editing-documentation)
+        - [Stopping the Mkdocs Server](#stopping-the-mkdocs-server)
+    - [Utilizing RockyDocsBuild for Previewing Documentation](#utilizing-rockydocsbuild-for-previewing-documentation)
+        - [Building Documentation for Preview](#building-documentation-for-preview)
+        - [Use Cases for RockyDocsBuild](#use-cases-for-rockydocsbuild)
+    - [Conclusions](#conclusions)
+<!--toc:end-->
+
+### Introduction to nvim-rockydocs
 
 Nvim-rockydocs is a Neovim plugin designed to provide a dedicated interface for
 writing documentation for the Rocky Linux Documentation Project. This plugin is
@@ -8,7 +36,7 @@ tailored to streamline the documentation process, making it easier for
 contributors to create, edit, and manage high-quality documentation for Rocky
 Linux.
 
-### Key Features {#key_features}
+### Key Features
 
 - Streamlined Documentation Workflow: nvim-rockydocs offers a simplified
   workflow for writing and managing documentation, ensuring that contributors
@@ -23,7 +51,7 @@ Linux.
 - Browser Preview: Contributors can preview their documentation in real-time,
   ensuring accuracy and quality before publication.
 
-### Purpose {#purpose}
+### Purpose
 
 The primary purpose of nvim-rockydocs is to provide a user-friendly interface
 for Rocky Linux contributors to write, edit, and manage documentation.  By
@@ -33,7 +61,7 @@ leveraging the power of Neovim and MkDocs, this plugin aims to:
 - Improve documentation quality and consistency
 - Enhance contributor experience
 
-### Benefits {#benefits}
+### Benefits
 
 By using *nvim-rockydocs*, contributors can benefit from:
 
@@ -43,7 +71,7 @@ By using *nvim-rockydocs*, contributors can benefit from:
 - Customization options to adhere to Rocky Linux documentation standards
 - Improved overall documentation quality and consistency
 
-### Getting Started {#getting_started}
+### Getting Started
 
 Once installed, explore the various commands and features to discover how
 *nvim-rockydocs* can enhance your documentation workflow for *Rocky Linux*.
@@ -51,7 +79,9 @@ With nvim-rockydocs, contribute to the [Rocky Linux Documentation
 Project](https://docs.rockylinux.org/) with ease, and help create high-quality
 documentation that benefits
 
-## Installing nvim-rockydocs with lazy.nvim
+# Install
+
+### Installing nvim-rockydocs with lazy.nvim
 
 **Step 1**: Add nvim-rockydocs to your lazy.nvim configuration
 
@@ -80,7 +110,7 @@ or
 :Lazy install
 ```
 
-## Installing nvim-rockydocs with rocks.nvim
+### Installing nvim-rockydocs with rocks.nvim
 
 *Rocks.nvim* is a plugin manager for *Neovim*, built using *Lua*. It aims to
 provide an efficient and easy-to-use way to manage plugins in your Neovim
@@ -94,7 +124,7 @@ To install the nvim-rockydocs rock, run the following command in Neovim:
 
 This will install the nvim-rockydocs rock and its dependencies.
 
-## Configuration
+# Configuration
 
 The nvim-rockydocs plugin utilizes Neovim's packadd command to load its
 dependencies and functionality on demand. This approach allows the plugin to be
@@ -175,7 +205,7 @@ By using preserved_paths you can ensure that certain directories are always
 included in the PATH environment variable, even when using nvim-rockydocs with a
 language server installed with `mason.nvim`.
 
-## RockyDocs Commands
+# RockyDocs Commands
 
 The "nvim-rockydocs" plugin provides a set of commands under the "RockyDocs"
 namespace, which are designed to streamline the documentation workflow for the
@@ -220,7 +250,7 @@ These RockyDocs commands provide a convenient way to manage documentation
 projects for the Rocky Linux Documentation Project, making it easier to create,
 edit, and deploy high-quality documentation.
 
-## PyVenv Commands
+# PyVenv Commands
 
 The "nvim-rockydocs" plugin provides a set of utility commands under the
 "PyVenv" namespace, which are designed to manage Python virtual environments
@@ -263,7 +293,7 @@ These PyVenv commands provide a convenient way to manage Python virtual
 environments directly within Neovim, making it easier to work with the
 "nvim-rockydocs" plugin and other projects that require virtual environments.
 
-## Creating a Rocky Linux Documentation Environment with nvim-rockydocs
+# Creating a Rocky Linux Documentation Environment with nvim-rockydocs
 
 Creating a Rocky Linux documentation environment is a straightforward process
 that involves a few key steps. Begin by setting up a dedicated project folder,
@@ -356,7 +386,7 @@ for you to create, manage, and publish your documentation projects efficiently,
     utilizing the powerful features of mkdocs and the convenience of nvim for
     editing and managing the documents.
 
-## Utilizing Rocky Linux Documentation Environment for daily use
+### Utilizing Rocky Linux Documentation Environment for daily use
 
 After setting up the Rocky Linux documentation environment with
 *nvim-rockydocs*, it's time to explore its daily use. This involves a seamless
@@ -392,7 +422,7 @@ By following this workflow, you can efficiently create, edit, and publish
 high-quality documentation using the Rocky Linux documentation environment with
 nvim-rockydocs.
 
-## Utilizing RockyDocsBuild for Previewing Documentation
+### Utilizing RockyDocsBuild for Previewing Documentation
 
 While the primary focus of the Rocky Linux documentation environment is on
 creating, editing, and mainly previewing documentation, there may be instances
@@ -437,7 +467,7 @@ projects before commit.
 > documentation is ready to be uploaded to a web server, where it can be served
 > to users.
 
-## Conclusions
+# Conclusions
 
 The Rocky Linux documentation environment, powered by nvim-rockydocs, has been
 meticulously designed to facilitate the creation, editing, and previewing of
