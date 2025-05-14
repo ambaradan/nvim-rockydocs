@@ -1,33 +1,5 @@
 # RockyDocs
 
-<!--toc:start-->
-- [RockyDocs Environment for Neovim](#rockydocs-environment-for-neovim)
-    - [Introduction to nvim-rockydocs {#intro}](#introduction-to-nvim-rockydocs-intro)
-        - [Key Features {#key_features}](#key-features-keyfeatures)
-        - [Purpose {#purpose}](#purpose-purpose)
-        - [Benefits {#benefits}](#benefits-benefits)
-        - [Getting Started {#getting_started}](#getting-started-gettingstarted)
-    - [Installing nvim-rockydocs with lazy.nvim](#installing-nvim-rockydocs-with-lazynvim)
-    - [Installing nvim-rockydocs with rocks.nvim](#installing-nvim-rockydocs-with-rocksnvim)
-    - [Configuration](#configuration)
-        - [Configuring `mkdocs serve` port in nvim-rockydocs](#configuring-mkdocs-serve-port-in-nvim-rockydocs)
-        - [Language Server availability](#language-server-availability)
-            - [Using preserved_paths in configs.lua](#using-preservedpaths-in-configslua)
-    - [RockyDocs Commands](#rockydocs-commands)
-        - [Usage](#usage)
-    - [PyVenv Commands](#pyvenv-commands)
-        - [Usage](#usage)
-    - [Creating a Rocky Linux Documentation Environment with nvim-rockydocs](#creating-a-rocky-linux-documentation-environment-with-nvim-rockydocs)
-    - [Utilizing Rocky Linux Documentation Environment for daily use](#utilizing-rocky-linux-documentation-environment-for-daily-use)
-        - [Launching the Mkdocs Server](#launching-the-mkdocs-server)
-        - [Editing Documentation](#editing-documentation)
-        - [Stopping the Mkdocs Server](#stopping-the-mkdocs-server)
-    - [Utilizing RockyDocsBuild for Previewing Documentation](#utilizing-rockydocsbuild-for-previewing-documentation)
-        - [Building Documentation for Preview](#building-documentation-for-preview)
-        - [Use Cases for RockyDocsBuild](#use-cases-for-rockydocsbuild)
-    - [Conclusions](#conclusions)
-<!--toc:end-->
-
 ### Introduction to nvim-rockydocs
 
 Nvim-rockydocs is a Neovim plugin designed to provide a dedicated interface for
@@ -293,7 +265,7 @@ These PyVenv commands provide a convenient way to manage Python virtual
 environments directly within Neovim, making it easier to work with the
 "nvim-rockydocs" plugin and other projects that require virtual environments.
 
-# Creating a Rocky Linux Documentation Environment with nvim-rockydocs
+# Creating the Environment
 
 Creating a Rocky Linux documentation environment is a straightforward process
 that involves a few key steps. Begin by setting up a dedicated project folder,
