@@ -64,7 +64,7 @@ or
 
 ## Installing nvim-rockydocs with rocks.nvim
 
-*Rocks.nvim* is a plugin manager for Neovim, built using Lua. It aims to provide an efficient and easy-to-use way to manage plugins in your Neovim configuration.
+*Rocks.nvim* is a plugin manager for *Neovim*, built using *Lua*. It aims to provide an efficient and easy-to-use way to manage plugins in your Neovim configuration.
 
 To install the nvim-rockydocs rock, run the following command in Neovim:
 
