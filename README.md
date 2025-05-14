@@ -117,7 +117,7 @@ startup. This provides a more efficient and flexible way to manage plugins, as
 it enables users to load only the plugins they need for a specific task or
 project.
 
-### Configure `mkdocs serve` port
+## Configure `mkdocs serve` port
 
 One of the key features of Mkdocs is the ability to serve your documentation
 locally for preview and testing purposes. By default, Mkdocs serves the site on
@@ -139,7 +139,7 @@ In this example, replace 8001 with the port number you wish to use. After
 setting up nvim-rockydocs with this configuration, when you run the Mkdocs
 server, it will use the specified port instead of the default port 8000.
 
-### Language Server availability
+## Language Server availability
 
 > Language servers are external tools that provide features such as syntax
 > checking, code completion, and debugging for a specific programming language.
@@ -155,7 +155,7 @@ variable to locate the language server executable. The plugin executes the
 language server using the `vim.fn.system` function, which searches for the
 executable in the directories specified in the PATH variable.
 
-#### Using preserved_paths in configs.lua
+## `preserved_paths` in configs.lua
 
 The preserved_paths option in configs.lua is used to specify a list of
 directories that should be preserved in the PATH environment variable when using
@@ -185,14 +185,18 @@ projects.
 
 The following RockyDocs commands are available:
 
-- **RockyDocsSetup**: This command sets up a new RockyDocs project by cloning
-  the repository and installing the required dependencies. It checks if a
-  virtual environment is active and installs the requirements using the pip
-  package manager.
-- **RockyDocsServe**: This command serves the documentation project using
-  MkDocs. It activates the virtual environment, checks if MkDocs is installed,
-  and starts the server in the background. The server can be stopped using the
-  RockyDocsStop command.
+:RockyDocsSetup
+
+: This command sets up a new RockyDocs project by cloning the repository and
+installing the required dependencies. It checks if a virtual environment is
+active and installs the requirements using the pip package manager.
+
+:RockyDocsServe
+
+: This command serves the documentation project using MkDocs. It activates the
+virtual environment, checks if MkDocs is installed, and starts the server in the
+background. The server can be stopped using the RockyDocsStop command.
+
 - **RockyDocsStop**: This command stops the currently running MkDocs server.
 - **RockyDocsBuild**: This command builds the documentation project using
   MkDocs. It activates the virtual environment, checks if MkDocs is installed,
@@ -279,7 +283,7 @@ for building and publishing your documentation. Once these components are in
 By following these simple steps, you can quickly establish a robust and
 efficient documentation environment using nvim-rockydocs.
 
-**Step 1**: Create an empty Project Folder
+Step 1: Create an empty Project Folder
 
 To start, create an empty folder for your project. This folder will serve as the
 root directory for your documentation environment. You can create the folder
@@ -291,7 +295,7 @@ mkdir my-rocky-docs
 
 Replace my-rocky-docs with the name of your choice for the project folder.
 
-**Step 2**: Navigate into the Project Folder and launch nvim
+Step 2: Navigate into the Project Folder and launch nvim
 
 Navigate into the newly created project folder and launch nvim:
 
@@ -301,7 +305,7 @@ cd my-rocky-docs nvim
 
 This will open nvim in the project folder, ready for further setup.
 
-**Step 3**: Create a Python Virtual Environment
+Step 3: Create a Python Virtual Environment
 
 Use PyVenvCreate to create a Python virtual environment within your project
 folder. This ensures that your documentation environment's dependencies do not
@@ -313,7 +317,7 @@ conflict with the system-wide Python environment:
 
 This command creates a virtual environment named `.venv` in your project folder.
 
-**Step 4**: Activate the Virtual Environment
+Step 4: Activate the Virtual Environment
 
 Activate the virtual environment using PyVenvActivate. This step is crucial as
 it allows you to install packages specific to your project without affecting the
@@ -323,7 +327,7 @@ system Python environment:
 :PyVenvActivate
 ```
 
-**Step 5**: Install Necessary Packages and Prepare the Project Structure
+Step 5: Install Necessary Packages and Prepare the Project Structure
 
 With the virtual environment activated, use RockyDocsSetup to install mkdocs and
 mkdocs-material using Python pip, and prepare the basic structure for your
@@ -337,7 +341,7 @@ This command installs the required packages and sets up the initial directory
 structure for your documentation project, including the basic configuration for
 mkdocs in `mkdocs.yml`.
 
-**Step 6**: Check the Status of the Setup
+Step 6: Check the Status of the Setup
 
 Finally, to ensure that everything is correctly set up and ready for use, run
 the RockyDocsStatus command:
