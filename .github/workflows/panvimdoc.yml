@@ -17,6 +17,7 @@ jobs:
         with:
           vimdoc: rockydocs
           version: "NVIM v0.10.4"
+          toc: false
           treesitter: true
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
