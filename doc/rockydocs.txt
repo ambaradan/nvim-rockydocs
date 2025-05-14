@@ -1,21 +1,6 @@
 *rockydocs.txt*            For NVIM v0.10.4           Last change: 2025 May 14
 
 ==============================================================================
-Table of Contents                                *rockydocs-table-of-contents*
-
-1. RockyDocs Environment for Neovim|rockydocs-rockydocs-environment-for-neovim|
-  - Introduction to nvim-rockydocs|rockydocs-rockydocs-environment-for-neovim-introduction-to-nvim-rockydocs|
-  - Installing nvim-rockydocs with lazy.nvim|rockydocs-rockydocs-environment-for-neovim-installing-nvim-rockydocs-with-lazy.nvim|
-  - Installing nvim-rockydocs with rocks.nvim|rockydocs-rockydocs-environment-for-neovim-installing-nvim-rockydocs-with-rocks.nvim|
-  - Configuration   |rockydocs-rockydocs-environment-for-neovim-configuration|
-  - RockyDocs Commands|rockydocs-rockydocs-environment-for-neovim-rockydocs-commands|
-  - PyVenv Commands|rockydocs-rockydocs-environment-for-neovim-pyvenv-commands|
-  - Creating a Rocky Linux Documentation Environment with nvim-rockydocs|rockydocs-rockydocs-environment-for-neovim-creating-a-rocky-linux-documentation-environment-with-nvim-rockydocs|
-  - Utilizing Rocky Linux Documentation Environment for daily use|rockydocs-rockydocs-environment-for-neovim-utilizing-rocky-linux-documentation-environment-for-daily-use|
-  - Utilizing RockyDocsBuild for Previewing Documentation|rockydocs-rockydocs-environment-for-neovim-utilizing-rockydocsbuild-for-previewing-documentation|
-  - Conclusions       |rockydocs-rockydocs-environment-for-neovim-conclusions|
-
-==============================================================================
 1. RockyDocs Environment for Neovim*rockydocs-rockydocs-environment-for-neovim*
 
 
