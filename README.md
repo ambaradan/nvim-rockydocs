@@ -1,3 +1,4 @@
+<!-- vale off -->
 # Introduction
 
 Nvim-rockydocs is a Neovim plugin designed to provide a dedicated interface for
@@ -8,17 +9,17 @@ Linux.
 
 ## Key Features
 
-- **Streamlined Documentation Workflow**: nvim-rockydocs offers a simplified
+- Streamlined Documentation Workflow: nvim-rockydocs offers a simplified
   workflow for writing and managing documentation, ensuring that contributors
   can focus on content creation.
-- **MkDocs Integration**: The plugin integrates seamlessly with MkDocs, allowing for
+- MkDocs Integration: The plugin integrates seamlessly with MkDocs, allowing for
   easy serving, building, and deployment of documentation.
-- **Virtual Environment Management**: Contributors can manage Python virtual
+- Virtual Environment Management: Contributors can manage Python virtual
   environments directly within Neovim, ensuring reproducibility and isolation
   for documentation projects.
-- **Customizable**: The plugin supports customization options to adhere to the Rocky
+- Customizable: The plugin supports customization options to adhere to the Rocky
   Linux documentation style and standards.
-- **Browser Preview**: Contributors can preview their documentation in real-time,
+- Browser Preview: Contributors can preview their documentation in real-time,
   ensuring accuracy and quality before publication.
 
 ## Purpose
@@ -44,7 +45,7 @@ By using *nvim-rockydocs*, contributors can benefit from:
 ## Getting Started
 
 Once installed, explore the various commands and features to discover how
-*nvim-rockydocs* can enhance your documentation workflow for *Rocky Linux*.
+nvim-rockydocs can enhance your documentation workflow for Rocky Linux.
 With nvim-rockydocs, contribute to the [Rocky Linux Documentation
 Project](https://docs.rockylinux.org/) with ease, and help create high-quality
 documentation that benefits
@@ -53,7 +54,7 @@ documentation that benefits
 
 ## Install with lazy.nvim
 
-**Step 1**: Add nvim-rockydocs to your lazy.nvim configuration
+Step 1: Add nvim-rockydocs to your lazy.nvim configuration
 
 In your Neovim configuration file (usually `plugins/init.lua`), add the
 following line to your *lazy.nvim* setup:
@@ -65,7 +66,7 @@ following line to your *lazy.nvim* setup:
 This will tell lazy.nvim to install the nvim-rockydocs plugin from the
 *ambaradan/nvim-rockydocs* GitHub repository.
 
-**Step 2**: Install nvim-rockydocs using lazy.nvim
+Step 2: Install nvim-rockydocs using lazy.nvim
 
 Save your init.lua file and restart Neovim. Then, run the following command in
 Neovim:
@@ -82,7 +83,7 @@ or
 
 ## Install with rocks.nvim
 
-*Rocks.nvim* is a plugin manager for *Neovim*, built using *Lua*. It aims to
+Rocks.nvim is a plugin manager for Neovim, built using Lua. It aims to
 provide an efficient and easy-to-use way to manage plugins in your Neovim
 configuration.
 
@@ -107,11 +108,11 @@ redundant loading. It then invokes a Lua function to set up the plugin's
 configuration.
 
 The use of packadd by nvim-rockydocs eliminates the need for explicit
-configuration with *lazy.nvim*. Users can simply install the plugin and start
-using it without having to add any additional configuration to their *lazy.nvim
-setup*.
+configuration with lazy.nvim. Users can simply install the plugin and start
+using it without having to add any additional configuration to their lazy.nvim
+setup.
 
-**NOTE:** Note about the `packadd` feature The packadd command is a feature in
+NOTE: Note about the `packadd` feature The packadd command is a feature in
 Neovim that allows users to load plugins on demand, rather than during Neovim
 startup. This provides a more efficient and flexible way to manage plugins, as
 it enables users to load only the plugins they need for a specific task or
@@ -185,22 +186,22 @@ projects.
 
 The following RockyDocs commands are available:
 
-- **RockyDocsSetup**: This command sets up a new RockyDocs project by cloning
+- RockyDocsSetup: This command sets up a new RockyDocs project by cloning
   the repository and installing the required dependencies. It checks if a
   virtual environment is active and installs the requirements using the pip
   package manager.
-- **RockyDocsServe**: This command serves the documentation project using
+- RockyDocsServe: This command serves the documentation project using
   MkDocs. It activates the virtual environment, checks if MkDocs is installed,
   and starts the server in the background. The server can be stopped using the
   RockyDocsStop command.
-- **RockyDocsStop**: This command stops the currently running MkDocs server.
-- **RockyDocsBuild**: This command builds the documentation project using
+- RockyDocsStop: This command stops the currently running MkDocs server.
+- RockyDocsBuild: This command builds the documentation project using
   MkDocs. It activates the virtual environment, checks if MkDocs is installed,
   and builds the documentation.
-- **RockyDocsStatus**: This command displays the status of the documentation
+- RockyDocsStatus: This command displays the status of the documentation
   project, including whether a virtual environment is active, whether MkDocs is
   installed, and whether the server is running.
-- **RockyDocsOpen**: This command open the RockyDocs documentation in the
+- RockyDocsOpen: This command open the RockyDocs documentation in the
   default web browser. This command is a convenient way to preview the
   documentation while you're working on it.
 
@@ -248,21 +249,21 @@ primary features. PyVenv Commands
 The following PyVenv commands are available as utilities in the "nvim-rockydocs"
 plugin:
 
-- **PyVenvCreate**: This command creates a new Python virtual environment for
+- PyVenvCreate: This command creates a new Python virtual environment for
   the current project. The environment is created using the python -m venv
   command, and the virtual environment directory is stored in the venvs_dir path
   specified in the plugin's configuration.
-- **PyVenvActivate**: This command activates the virtual environment for the
+- PyVenvActivate: This command activates the virtual environment for the
   current project. If the virtual environment does not exist, it will be created
   first. The VIRTUAL_ENV environment variable is set to the path of the active
   virtual environment, and the PATH environment variable is updated to
   prioritize the virtual environment's bin directory.
-- **PyVenvDeactivate**: This command deactivates the currently active virtual
+- PyVenvDeactivate: This command deactivates the currently active virtual
   environment, restoring the original environment variables.
-- **PyVenvStatus**: This command displays the status of the virtual environment,
+- PyVenvStatus: This command displays the status of the virtual environment,
   including whether it is active, the Python version, and the path to the
   virtual environment.
-- **PyVenvRemove**: This command removes the virtual environment for the current
+- PyVenvRemove: This command removes the virtual environment for the current
   project.
 
 ## Usage
