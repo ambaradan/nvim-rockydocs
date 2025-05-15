@@ -5,7 +5,6 @@ Table of Contents                                *rockydocs-table-of-contents*
 
 1. Introduction                                       |rockydocs-introduction|
   - Key Features                         |rockydocs-introduction-key-features|
-  - Getting Started                   |rockydocs-introduction-getting-started|
 2. Install                                                 |rockydocs-install|
   - Install with lazy.nvim          |rockydocs-install-install-with-lazy.nvim|
   - Install with rocks.nvim        |rockydocs-install-install-with-rocks.nvim|
@@ -17,8 +16,9 @@ Table of Contents                                *rockydocs-table-of-contents*
   - Usage                                 |rockydocs-rockydocs-commands-usage|
 5. PyVenv Commands                                 |rockydocs-pyvenv-commands|
   - Usage                                    |rockydocs-pyvenv-commands-usage|
-6. Creating the Environment               |rockydocs-creating-the-environment|
-7. Help                                                       |rockydocs-help|
+6. Getting Started                                 |rockydocs-getting-started|
+7. Creating the Environment               |rockydocs-creating-the-environment|
+8. Help                                                       |rockydocs-help|
 
 ==============================================================================
 1. Introduction                                       *rockydocs-introduction*
@@ -65,15 +65,6 @@ management within Neovim:
     - Helps maintain consistent documentation standards across contributors
     - Provides a uniform editing experience
     - Facilitates easier peer review and content validation
-
-
-GETTING STARTED                       *rockydocs-introduction-getting-started*
-
-Once installed, explore the various commands and features to discover how
-nvim-rockydocs can enhance your documentation workflow for Rocky Linux. With
-nvim-rockydocs, contribute to the Rocky Linux Documentation Project
-<https://docs.rockylinux.org/> with ease, and help create high-quality
-documentation that benefits
 
 
 ==============================================================================
@@ -361,7 +352,41 @@ environments directly within Neovim, making it easier to work with the
 
 
 ==============================================================================
-6. Creating the Environment               *rockydocs-creating-the-environment*
+6. Getting Started                                 *rockydocs-getting-started*
+
+The RockyDocs Neovim Plugin is engineered to streamline the process of managing
+MkDocs-based documentation projects directly within the Neovim editor. This
+plugin empowers contributors to create, serve, and build documentation content
+efficiently, eliminating the need to switch between the editor and a terminal
+for common documentation tasks.
+
+Upon integrating RockyDocs into your workflow, you can easily create a new
+virtual environment specific to Rocky Linux documentation project using the
+:PyVenvCreate command. Once the virtual environment is established, activate it
+with :PyVenvActivate, ensuring that all dependencies for MkDocs can be managed
+effectively within that context. RockyDocs offers the command :RockyDocsSetup
+to initialize your documentation project by cloning template files and
+preparing the necessary structure.
+
+The plugin enables to serve the documentation locally with the :RockyDocsServe
+command. This command starts a MkDocs server, providing a live preview of the
+new pages in a web browser. Users can also specify ports if needed while
+accessing the server at the designated address.
+
+In addition to serving documentation, RockyDocs allows for building static
+documentation files through the :RockyDocsBuild command. This is especially
+useful for deploying documentation once it has been finalized. Furthermore,
+users can monitor the status of their MkDocs environment using the
+:RockyDocsStatus command, which provides information about the active virtual
+environment, MkDocs installation, and any running servers.
+
+The RockyDocs Neovim Plugin significantly enhances the documentation workflow
+for developers, offering powerful tools integrated within the Neovim interface,
+thus improving the efficiency and ease of managing documentation projects.
+
+
+==============================================================================
+7. Creating the Environment               *rockydocs-creating-the-environment*
 
 Creating a Rocky Linux documentation environment is a straightforward process
 that involves a few key steps. Begin by setting up a dedicated project folder,
@@ -456,96 +481,8 @@ utilizing the powerful features of mkdocs and the convenience of nvim for
 editing and managing the documents.
 
 
-UTILIZING ROCKY LINUX DOCUMENTATION ENVIRONMENT FOR DAILY USE ~
-
-After setting up the Rocky Linux documentation environment with
-_nvim-rockydocs_, it’s time to explore its daily use. This involves a
-seamless workflow that includes launching the mkdocs server, editing
-documentation, and stopping the server when finished.
-
-
-LAUNCHING THE MKDOCS SERVER ~
-
-To start working on your documentation, use the `:RockyDocsServe` command
-within _nvim_. This command launches the mkdocs server, making your
-documentation available for preview at `http://localhost:8000`. With the server
-running, you can edit your documentation files, and the changes will be
-reflected in real-time in your web browser.
-
-
-EDITING DOCUMENTATION ~
-
-While the mkdocs server is running, you can freely edit your documentation
-files using nvim. Take advantage of nvim powerful editing features, such as
-syntax highlighting, auto-completion, and version control integration, to
-efficiently create and refine your documentation. As you save changes to your
-files, the mkdocs server will automatically rebuild your documentation site,
-allowing you to preview the updated content in your browser.
-
-
-STOPPING THE MKDOCS SERVER ~
-
-Once you’ve completed your editing tasks, it’s essential to stop the mkdocs
-server to free up system resources. Use the `:RockyDocsStop` command to
-gracefully stop the server. This ensures that the server process is terminated
-cleanly, preventing any potential issues or conflicts with other system
-processes.
-
-By following this workflow, you can efficiently create, edit, and publish
-high-quality documentation using the Rocky Linux documentation environment with
-nvim-rockydocs.
-
-
-UTILIZING ROCKYDOCSBUILD FOR PREVIEWING DOCUMENTATION ~
-
-While the primary focus of the Rocky Linux documentation environment is on
-creating, editing, and mainly previewing documentation, there may be instances
-where you need to build your documentation for a more polished preview.
-Although building and deploying documentation is outside the initial scope of
-the project, nvim-rockydocs provides a useful command, `:RockyDocsBuild`, to
-help facilitate this process.
-
-
-BUILDING DOCUMENTATION FOR PREVIEW ~
-
-The `:RockyDocsBuild` command leverages mkdocs built-in functionality to
-generate a static HTML site from your documentation files. This resulting site
-can be used for a more comprehensive preview of your documentation, allowing
-you to see how it will look when finalized. When you run `:RockyDocsBuild`,
-mkdocs compiles your documentation into a fully functional website, complete
-with navigation, search functionality, and styling based on the mkdocs-material
-theme.
-
-
-USE CASES FOR ROCKYDOCSBUILD ~
-
-Although not the primary intention of the project, using `:RockyDocsBuild` can
-be beneficial in several scenarios:
-
-- Comprehensive Preview: After making significant changes or additions to
-    your documentation, building the site provides a thorough preview of how the
-    documentation will appear.
-- Testing: Before sharing or deploying your documentation, building it with
-    :RockyDocsBuild allows you to test links, images, and other media to ensure
-    they are correctly referenced.
-- Localization and Theme Testing**: If you’re using custom themes or
-    localization, building your documentation helps verify that these aspects are
-    correctly implemented.
-
-The `:RockyDocsBuild` command offers a straightforward way to build your
-documentation for a comprehensive preview. This feature can be particularly
-useful for testing, verification, and quality assurance of your documentation
-projects before commit.
-
-
-  [!NOTE] The :RockyDocsBuild command generates a static HTML site from your
-  documentation files, which is specifically designed for deployment on a web
-  server, rather than for local browsing. This built version of your
-  documentation is ready to be uploaded to a web server, where it can be served
-  to users.
-
 ==============================================================================
-7. Help                                                       *rockydocs-help*
+8. Help                                                       *rockydocs-help*
 
 This plugin includes a built-in help feature to assist users in navigating its
 functionalities. For detailed information, you can browse the help
