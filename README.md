@@ -1,7 +1,7 @@
 <!-- vale off -->
 # Introduction
 
-Nvim-rockydocs is a Neovim plugin designed to provide a dedicated interface for
+__Nvim-rockydocs__ is a Neovim plugin designed to provide a dedicated interface for
 writing documentation for the Rocky Linux Documentation Project. This plugin is
 tailored to streamline the documentation process, making it easier for
 contributors to create, edit, and manage high-quality documentation for Rocky
@@ -9,17 +9,17 @@ Linux.
 
 ## Key Features
 
-- Streamlined Documentation Workflow: nvim-rockydocs offers a simplified
+* Streamlined Documentation Workflow: nvim-rockydocs offers a simplified
   workflow for writing and managing documentation, ensuring that contributors
   can focus on content creation.
-- MkDocs Integration: The plugin integrates seamlessly with MkDocs, allowing for
+* MkDocs Integration: The plugin integrates seamlessly with MkDocs, allowing for
   easy serving, building, and deployment of documentation.
-- Virtual Environment Management: Contributors can manage Python virtual
+* Virtual Environment Management: Contributors can manage Python virtual
   environments directly within Neovim, ensuring reproducibility and isolation
   for documentation projects.
-- Customizable: The plugin supports customization options to adhere to the Rocky
+* Customizable: The plugin supports customization options to adhere to the Rocky
   Linux documentation style and standards.
-- Browser Preview: Contributors can preview their documentation in real-time,
+* Browser Preview: Contributors can preview their documentation in real-time,
   ensuring accuracy and quality before publication.
 
 ## Purpose
@@ -28,19 +28,19 @@ The primary purpose of nvim-rockydocs is to provide a user-friendly interface
 for Rocky Linux contributors to write, edit, and manage documentation.  By
 leveraging the power of Neovim and MkDocs, this plugin aims to:
 
-- Simplify the documentation process
-- Improve documentation quality and consistency
-- Enhance contributor experience
+* Simplify the documentation process
+* Improve documentation quality and consistency
+* Enhance contributor experience
 
 ## Benefits
 
 By using *nvim-rockydocs*, contributors can benefit from:
 
-- A streamlined documentation workflow
-- Easy management of virtual environments and dependencies
-- Real-time preview and feedback
-- Customization options to adhere to Rocky Linux documentation standards
-- Improved overall documentation quality and consistency
+* A streamlined documentation workflow
+* Easy management of virtual environments and dependencies
+* Real-time preview and feedback
+* Customization options to adhere to Rocky Linux documentation standards
+* Improved overall documentation quality and consistency
 
 ## Getting Started
 
@@ -186,22 +186,22 @@ projects.
 
 The following RockyDocs commands are available:
 
-- RockyDocsSetup: This command sets up a new RockyDocs project by cloning
+* RockyDocsSetup: This command sets up a new RockyDocs project by cloning
   the repository and installing the required dependencies. It checks if a
   virtual environment is active and installs the requirements using the pip
   package manager.
-- RockyDocsServe: This command serves the documentation project using
+* RockyDocsServe: This command serves the documentation project using
   MkDocs. It activates the virtual environment, checks if MkDocs is installed,
   and starts the server in the background. The server can be stopped using the
   RockyDocsStop command.
-- RockyDocsStop: This command stops the currently running MkDocs server.
-- RockyDocsBuild: This command builds the documentation project using
+* RockyDocsStop: This command stops the currently running MkDocs server.
+* RockyDocsBuild: This command builds the documentation project using
   MkDocs. It activates the virtual environment, checks if MkDocs is installed,
   and builds the documentation.
-- RockyDocsStatus: This command displays the status of the documentation
+* RockyDocsStatus: This command displays the status of the documentation
   project, including whether a virtual environment is active, whether MkDocs is
   installed, and whether the server is running.
-- RockyDocsOpen: This command open the RockyDocs documentation in the
+* RockyDocsOpen: This command open the RockyDocs documentation in the
   default web browser. This command is a convenient way to preview the
   documentation while you're working on it.
 
@@ -249,21 +249,21 @@ primary features. PyVenv Commands
 The following PyVenv commands are available as utilities in the "nvim-rockydocs"
 plugin:
 
-- PyVenvCreate: This command creates a new Python virtual environment for
+* PyVenvCreate: This command creates a new Python virtual environment for
   the current project. The environment is created using the python -m venv
   command, and the virtual environment directory is stored in the venvs_dir path
   specified in the plugin's configuration.
-- PyVenvActivate: This command activates the virtual environment for the
+* PyVenvActivate: This command activates the virtual environment for the
   current project. If the virtual environment does not exist, it will be created
   first. The VIRTUAL_ENV environment variable is set to the path of the active
   virtual environment, and the PATH environment variable is updated to
   prioritize the virtual environment's bin directory.
-- PyVenvDeactivate: This command deactivates the currently active virtual
+* PyVenvDeactivate: This command deactivates the currently active virtual
   environment, restoring the original environment variables.
-- PyVenvStatus: This command displays the status of the virtual environment,
+* PyVenvStatus: This command displays the status of the virtual environment,
   including whether it is active, the Python version, and the path to the
   virtual environment.
-- PyVenvRemove: This command removes the virtual environment for the current
+* PyVenvRemove: This command removes the virtual environment for the current
   project.
 
 ## Usage
@@ -311,7 +311,7 @@ for building and publishing your documentation. Once these components are in
 By following these simple steps, you can quickly establish a robust and
 efficient documentation environment using nvim-rockydocs.
 
-**Step 1**: Create an empty Project Folder
+__Step 1__: Create an empty Project Folder
 
 To start, create an empty folder for your project. This folder will serve as the
 root directory for your documentation environment. You can create the folder
@@ -323,7 +323,7 @@ mkdir my-rocky-docs
 
 Replace my-rocky-docs with the name of your choice for the project folder.
 
-**Step 2**: Navigate into the Project Folder and launch nvim
+__Step 2__: Navigate into the Project Folder and launch nvim
 
 Navigate into the newly created project folder and launch nvim:
 
@@ -333,7 +333,7 @@ cd my-rocky-docs nvim
 
 This will open nvim in the project folder, ready for further setup.
 
-**Step 3**: Create a Python Virtual Environment
+__Step 3__: Create a Python Virtual Environment
 
 Use PyVenvCreate to create a Python virtual environment within your project
 folder. This ensures that your documentation environment's dependencies do not
@@ -345,7 +345,7 @@ conflict with the system-wide Python environment:
 
 This command creates a virtual environment named `.venv` in your project folder.
 
-**Step 4**: Activate the Virtual Environment
+__Step 4__: Activate the Virtual Environment
 
 Activate the virtual environment using PyVenvActivate. This step is crucial as
 it allows you to install packages specific to your project without affecting the
@@ -355,7 +355,7 @@ system Python environment:
 :PyVenvActivate
 ```
 
-**Step 5**: Install Necessary Packages and Prepare the Project Structure
+__Step 5__: Install Necessary Packages and Prepare the Project Structure
 
 With the virtual environment activated, use RockyDocsSetup to install mkdocs and
 mkdocs-material using Python pip, and prepare the basic structure for your
@@ -369,7 +369,7 @@ This command installs the required packages and sets up the initial directory
 structure for your documentation project, including the basic configuration for
 mkdocs in `mkdocs.yml`.
 
-**Step 6**: Check the Status of the Setup
+__Step 6__: Check the Status of the Setup
 
 Finally, to ensure that everything is correctly set up and ready for use, run
 the RockyDocsStatus command:
@@ -448,13 +448,13 @@ theme.
 Although not the primary intention of the project, using `:RockyDocsBuild` can
 be beneficial in several scenarios:
 
-- **Comprehensive Preview**: After making significant changes or additions to
+* Comprehensive Preview: After making significant changes or additions to
   your documentation, building the site provides a thorough preview of how the
   documentation will appear.
-- **Testing**: Before sharing or deploying your documentation, building it with
+* Testing: Before sharing or deploying your documentation, building it with
   :RockyDocsBuild allows you to test links, images, and other media to ensure
   they are correctly referenced.
-- **Localization and Theme Testing**: If you're using custom themes or
+* Localization and Theme Testing**: If you're using custom themes or
   localization, building your documentation helps verify that these aspects are
   correctly implemented.
 
@@ -469,6 +469,16 @@ projects before commit.
 > documentation is ready to be uploaded to a web server, where it can be served
 > to users.
 
+# Help
+
+This plugin includes a built-in help feature to assist users in navigating its
+functionalities. For detailed information, you can browse the help documentation
+by using the command `:h rockydocs`. This provides quick access to guidance on
+various features and usage tips directly within the environment. For a more
+comprehensive overview, you can also refer to the accompanying
+`doc/rockydocs.txt` file, which contains additional information and best
+practices for utilizing the plugin effectively.
+
 <!-- panvimdoc-ignore-start -->
 
 # Conclusions
@@ -477,7 +487,7 @@ The Rocky Linux documentation environment, powered by nvim-rockydocs, has been
 meticulously designed to facilitate the creation, editing, and previewing of
 high-quality documentation for Rocky Linux contributions. By providing a
 streamlined and intuitive workflow, this environment aims to empower
-contributors to focus on what matters most: **creating valuable content that
-enhances the Rocky Linux ecosystem**.
+contributors to focus on what matters most: __creating valuable content that
+enhances the Rocky Linux ecosystem__.
 
 <!-- panvimdoc-ignore-end -->
