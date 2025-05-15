@@ -102,30 +102,31 @@ module for the RockyDocs Neovim plugin.
 The default configuration is encapsulated within the **M.default_config**
 table, which includes several key settings:
 
-* venvs_dir: This setting specifies the directory where virtual environments
+* *venvs_dir*: This setting specifies the directory where virtual environments
   will be stored. By default, it is set to the Neovim data directory, appended
-  with /venvs. This ensures that all virtual environments created for different
+  *with /venvs*. This ensures that all virtual environments created for different
   projects are organized in a single location, making management
   straightforward.
-* preserved_paths: This is a list of directories that should be preserved in
+* *preserved_paths*: This is a list of directories that should be preserved in
   the system PATH when activating a virtual environment. The default paths
   include common binary directories, such as:
+
     * vim.fn.stdpath("data") .. "/mason/bin" (for Mason-managed binaries)
     * /usr/local/bin
     * /usr/bin
-    * The user's local binary directory located in os.getenv("HOME") ..
-      "/.local/bin"
+    * os.getenv("HOME") .. "/.local/bin" (the user's local binary directory)
 
 This setting ensures that essential commands remain accessible even when a
 virtual environment is activated.
 
-* mkdocs_server: This section of the configuration handles settings related to
+mkdocs_server: This section of the configuration handles settings related to
   the MkDocs server. Key parameters include:
-    * default_port: The default port (8000) for running the MkDocs server. This
-      setting can be overridden when starting the server.
-    * port_range_start and port_range_end: These settings define a valid range
-      for port selection, helping to avoid conflicts with other applications
-          that might be using the same ports.
+
+* *default_port*: The default port (8000) for running the MkDocs server. This
+  setting can be overridden when starting the server.
+* *port_range_start* and *port_range_end*: These settings define a valid range
+  for port selection, helping to avoid conflicts with other applications that
+      might be using the same ports.
 
 ### Current Configuration
 
