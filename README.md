@@ -1,46 +1,51 @@
 <!-- vale off -->
 # Introduction
 
-__Nvim-rockydocs__ is a Neovim plugin designed to provide a dedicated interface for
-writing documentation for the Rocky Linux Documentation Project. This plugin is
-tailored to streamline the documentation process, making it easier for
-contributors to create, edit, and manage high-quality documentation for Rocky
-Linux.
+nvim-rockydocs is a Neovim plugin designed to facilitate the creation and
+management of Rocky Linux pages within the Neovim environment. This plugin aims
+to streamline the documentation process by providing features such as automated
+documentation generation, syntax highlighting, and potentially integration with
+other development tools.
+
+The nvim-rockydocs plugin provides support for the mkdocs-material theme, which
+is the default theme used in the Rocky Linux Documentation site. The
+mkdocs-material theme supports a range of extended Markdown tags that provide
+additional formatting and layout options. The nvim-rockydocs plugin provides
+native support for the mkdocs-material theme, allowing contributors to use the
+extended Markdown tags and features provided by the theme.
 
 ## Key Features
 
-* Streamlined Documentation Workflow: nvim-rockydocs offers a simplified
-  workflow for writing and managing documentation, ensuring that contributors
-  can focus on content creation.
-* MkDocs Integration: The plugin integrates seamlessly with MkDocs, allowing for
-  easy serving, building, and deployment of documentation.
-* Virtual Environment Management: Contributors can manage Python virtual
-  environments directly within Neovim, ensuring reproducibility and isolation
-  for documentation projects.
-* Customizable: The plugin supports customization options to adhere to the Rocky
-  Linux documentation style and standards.
-* Browser Preview: Contributors can preview their documentation in real-time,
-  ensuring accuracy and quality before publication.
+The nvim-rockydocs plugin provides a range of features to enhance documentation
+management within Neovim:
 
-## Purpose
+* Visual Consistency
+    * Provides a real-time preview that exactly matches the official Rocky
+      Linux documentation style
+    * Ensures visual alignment with the project's design guidelines
+    * Helps contributors understand how their content will appear in the final
+      documentation
 
-The primary purpose of nvim-rockydocs is to provide a user-friendly interface
-for Rocky Linux contributors to write, edit, and manage documentation.  By
-leveraging the power of Neovim and MkDocs, this plugin aims to:
+* Real-Time Rendering
+    * Immediate visual feedback as you write
+    * Allows instant verification of formatting, structure, and layout
+    * Reduces back-and-forth between editing and final presentation
 
-* Simplify the documentation process
-* Improve documentation quality and consistency
-* Enhance contributor experience
+* Markdown Support
+    * Seamless integration with Markdown syntax
+    * Easy formatting of headings, lists, code blocks, and other documentation
+      elements
+    * Simplifies the documentation creation process
 
-## Benefits
+* Workflow Efficiency
+    * Eliminates guesswork about final document appearance
+    * Speeds up documentation writing and review processes
+    * Reduces potential formatting errors
 
-By using *nvim-rockydocs*, contributors can benefit from:
-
-* A streamlined documentation workflow
-* Easy management of virtual environments and dependencies
-* Real-time preview and feedback
-* Customization options to adhere to Rocky Linux documentation standards
-* Improved overall documentation quality and consistency
+* Collaborative Editing Features
+    * Helps maintain consistent documentation standards across contributors
+    * Provides a uniform editing experience
+    * Facilitates easier peer review and content validation
 
 ## Getting Started
 
