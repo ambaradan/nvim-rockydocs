@@ -1,3 +1,27 @@
+--[[
+    utils.lua - Utility functions for RockyDocs
+
+    Functions:
+    - venv management (create/activate/deactivate)
+    - mkdocs installation checks
+    - path operations
+    - system status reporting
+
+    Dependencies:
+    - Requires rockydocs.configs for system configuration
+    - Requires rockydocs.main for MkDocs operations
+
+    Key Features:
+    1. Virtual environment handling
+    2. MkDocs dependency verification
+    3. Cross-platform path joining
+    4. Python version detection
+
+    License:
+    Distributed under the MIT License.
+    Full text at: https://opensource.org/licenses/MIT
+]]
+
 local M = {}
 
 local config = require("rockydocs.configs").config

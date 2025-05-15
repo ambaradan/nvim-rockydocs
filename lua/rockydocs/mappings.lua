@@ -1,5 +1,24 @@
--- File: mappings.lua
--- Description: File with Neovim commands and key mappings
+--[[
+    mappings.lua - Keybindings and command definitions
+
+    Features:
+    - MkDocs server control commands
+    - Virtual environment management
+    - Browser integration
+
+    Dependencies:
+    - Requires rockydocs.utils for environment utilities
+    - Requires rockydocs.configs for system configuration
+
+    Commands:
+    1. RockyDocs*: Documentation system controls
+    2. PyVenv*: Python virtualenv operations
+    3. Open/Stop server functions
+
+    License:
+    Distributed under the MIT License.
+    Full text at: https://opensource.org/licenses/MIT
+]]
 
 local mkdocs = require("rockydocs.main")
 local venv = require("rockydocs.utils")
