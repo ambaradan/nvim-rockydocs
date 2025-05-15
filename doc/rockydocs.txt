@@ -119,6 +119,66 @@ This will install the nvim-rockydocs rock and its dependencies.
 ==============================================================================
 3. Config                                                   *rockydocs-config*
 
+The `rockydocs/configs.lua` file serves as the central configuration management
+module for the RockyDocs Neovim plugin.
+
+
+DEFAULT CONFIGURATION ~
+
+The default configuration is encapsulated within the **M.default_config**
+table, which includes several key settings:
+
+- venvs_dir: This setting specifies the directory where virtual environments
+    will be stored. By default, it is set to the Neovim data directory, appended
+    with /venvs. This ensures that all virtual environments created for different
+    projects are organized in a single location, making management
+    straightforward.
+- preserved_paths: This is a list of directories that should be preserved in
+    the system PATH when activating a virtual environment. The default paths
+    include common binary directories, such as:
+    - vim.fn.stdpath("data") .. "/mason/bin" (for Mason-managed binaries)
+    - /usr/local/bin
+    - /usr/bin
+    - The user’s local binary directory located in os.getenv("HOME") ..
+        "/.local/bin"
+
+This setting ensures that essential commands remain accessible even when a
+virtual environment is activated.
+
+- mkdocs_server: This section of the configuration handles settings related to
+    the MkDocs server. Key parameters include:
+    - default_port: The default port (8000) for running the MkDocs server. This
+        setting can be overridden when starting the server.
+    - port_range_start and port_range_end: These settings define a valid range
+        for port selection, helping to avoid conflicts with other applications
+        that might be using the same ports.
+
+
+CURRENT CONFIGURATION ~
+
+In addition to the default settings, the M.config table represents the current
+configuration that is used during the plugin’s operation. This configuration
+is merged with the default settings when the plugin is initialized. This design
+allows users to override specific settings without altering the defaults,
+providing flexibility in configuration.
+
+
+STATE MANAGEMENT ~
+
+The `M.state table` is crucial for managing the state of the RockyDocs plugin.
+It tracks information such as:
+
+- original_path: Stores the original PATH environment variable, allowing the
+    plugin to restore it after deactivating a virtual environment.
+- original_python_path: Keeps the path of the original Python executable in use
+    before activating any virtual environment.
+- active: A boolean value that indicates whether a virtual environment is
+    currently active.
+- current_server_port: Stores the port number for the currently running MkDocs
+    server, helping to manage server status effectively.
+- server_job_id: Holds the job identifier for the MkDocs server process,
+    enabling the plugin to manage and monitor the server instance.
+
 The nvim-rockydocs plugin utilizes Neovim’s packadd command to load its
 dependencies and functionality on demand. This approach allows the plugin to be
 loaded only when needed, reducing Neovim’s startup time and improving overall
