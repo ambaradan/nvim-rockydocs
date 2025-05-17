@@ -147,8 +147,11 @@ activation of a virtual environment.
 mkdocs_server: This section of the configuration handles settings related to
 the MkDocs server. Key parameters include:
 
-- _default_port_: The default port (8000) for running the MkDocs server. This setting can be overridden when starting the server.
-- _port_range_start_ and _port_range_end_: These settings define a valid range for port selection, helping to avoid conflicts with other applications that might be using the same ports.
+- _default_port_: The default port (8000) for running the MkDocs server. This
+    setting can be overridden when starting the server.
+- _port_range_start_ and _port_range_end_: These settings define a valid range
+    for port selection, helping to avoid conflicts with other applications that
+    might be using the same ports.
 
 
 CURRENT CONFIGURATION ~
@@ -165,11 +168,16 @@ STATE MANAGEMENT ~
 The `M.state table` is crucial for managing the state of the RockyDocs plugin.
 It tracks information such as:
 
-- original_path: Stores the original PATH environment variable, allowing the plugin to restore it after deactivating a virtual environment.
-- original_python_path: Keeps the path of the original Python executable in use before activating any virtual environment.
-- active: A boolean value that indicates whether a virtual environment is currently active.
-- current_server_port: Stores the port number for the currently running MkDocs server, helping to manage server status effectively.
-- server_job_id: Holds the job identifier for the MkDocs server process, enabling the plugin to manage and monitor the server instance.
+- original_path: Stores the original PATH environment variable, allowing the
+    plugin to restore it after deactivating a virtual environment.
+- original_python_path: Keeps the path of the original Python executable in use
+    before activating any virtual environment.
+- active: A boolean value that indicates whether a virtual environment is
+    currently active.
+- current_server_port: Stores the port number for the currently running MkDocs
+    server, helping to manage server status effectively.
+- server_job_id: Holds the job identifier for the MkDocs server process,
+    enabling the plugin to manage and monitor the server instance.
 
 The nvim-rockydocs plugin utilizes Neovim’s packadd command to load its
 dependencies and functionality on demand. This approach allows loading plugins
@@ -262,12 +270,24 @@ browse the documentation project, are the primary features of the plugin.
 
 The following RockyDocs commands are available:
 
-- RockyDocsSetup: This command sets up a new RockyDocs project by cloning the repository and installing the required dependencies. It checks if a virtual environment is active and installs the requirements using the pip package manager.
-- RockyDocsServe: This command serves the documentation project using MkDocs. It activates the virtual environment, checks for the installation status of MkDocs, and starts the server in the background. You can stop the server using the RockyDocsStop command.
+- RockyDocsSetup: This command sets up a new RockyDocs project by cloning the
+    repository and installing the required dependencies. It checks if a virtual
+    environment is active and installs the requirements using the pip package
+    manager.
+- RockyDocsServe: This command serves the documentation project using MkDocs.
+    It activates the virtual environment, checks for the installation status of
+    MkDocs, and starts the server in the background. You can stop the server
+    using the RockyDocsStop command.
 - RockyDocsStop: This command stops the currently running MkDocs server.
-- RockyDocsBuild: This command builds the documentation project using MkDocs. It activates the virtual environment, checks for the installation status of MkDocs, and builds the documentation.
-- RockyDocsStatus: This command displays the status of the documentation project, including whether a virtual environment is active, the installation status of MkDocs, and whether the server is running.
-- RockyDocsOpen: This command opens the RockyDocs documentation in the default web browser. This command is a convenient way to preview the documentation while you are working on it.
+- RockyDocsBuild: This command builds the documentation project using MkDocs.
+    It activates the virtual environment, checks for the installation status of
+    MkDocs, and builds the documentation.
+- RockyDocsStatus: This command displays the status of the documentation
+    project, including whether a virtual environment is active, the installation
+    status of MkDocs, and whether the server is running.
+- RockyDocsOpen: This command opens the RockyDocs documentation in the default
+    web browser. This command is a convenient way to preview the documentation
+    while you are working on it.
 
 
 USAGE                                     *rockydocs-rockydocs-commands-usage*
@@ -326,11 +346,22 @@ but rather serve as auxiliary tools to support the plugin’s primary features.
 The following PyVenv commands are available as utilities in the
 "nvim-rockydocs" plugin:
 
-- PyVenvCreate: This command creates a new Python virtual environment for the current project. The python -m venv command creates the environment, and stores the virtual environment directory in the venvs_dir path specified in the plugin’s configuration.
-- PyVenvActivate: This command activates the virtual environment for the current project. If the virtual environment does not exist, it creates it first. The command sets the VIRTUAL_ENV environment variable to the path of the active virtual environment, and updates the PATH environment variable to prioritize the virtual environment’s bin directory.
-- PyVenvDeactivate: This command deactivates the currently active virtual environment, restoring the original environment variables.
-- PyVenvStatus: This command displays the status of the virtual environment, including whether it is active, the Python version, and the path to the virtual environment.
-- PyVenvRemove: This command removes the virtual environment for the current project.
+- PyVenvCreate: This command creates a new Python virtual environment for the
+    current project. The python -m venv command creates the environment, and
+    stores the virtual environment directory in the venvs_dir path specified in
+    the plugin’s configuration.
+- PyVenvActivate: This command activates the virtual environment for the
+    current project. If the virtual environment does not exist, it creates it
+    first. The command sets the VIRTUAL_ENV environment variable to the path of
+    the active virtual environment, and updates the PATH environment variable to
+    prioritize the virtual environment’s bin directory.
+- PyVenvDeactivate: This command deactivates the currently active virtual
+    environment, restoring the original environment variables.
+- PyVenvStatus: This command displays the status of the virtual environment,
+    including whether it is active, the Python version, and the path to the
+    virtual environment.
+- PyVenvRemove: This command removes the virtual environment for the current
+    project.
 
 
 USAGE                                        *rockydocs-pyvenv-commands-usage*
