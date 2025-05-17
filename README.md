@@ -108,8 +108,8 @@ table, includes several key settings:
   created for different projects in a single location, making management
   straightforward.
 * *preserved_paths*: This is a list of directories preserved in the system PATH
-  when activating a virtual environment. The default paths include common
-  binary directories, such as:
+  when activating a virtual environment.  
+  The default paths include common binary directories, such as:
 
     * vim.fn.stdpath("data") .. "/mason/bin" (for Mason-managed binaries)
     * /usr/local/bin
