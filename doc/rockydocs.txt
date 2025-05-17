@@ -1,4 +1,4 @@
-*rockydocs.txt*            For NVIM v0.10.4           Last change: 2025 May 15
+*rockydocs.txt*            For NVIM v0.10.4           Last change: 2025 May 17
 
 ==============================================================================
 Table of Contents                                *rockydocs-table-of-contents*
@@ -8,10 +8,10 @@ Table of Contents                                *rockydocs-table-of-contents*
 2. Install                                                 |rockydocs-install|
   - Install with lazy.nvim          |rockydocs-install-install-with-lazy.nvim|
   - Install with rocks.nvim        |rockydocs-install-install-with-rocks.nvim|
-3. Config                                                   |rockydocs-config|
-  - mkdocs serve port                     |rockydocs-config-mkdocs-serve-port|
-  - LSP availability                       |rockydocs-config-lsp-availability|
-  - preserved_paths                         |rockydocs-config-preserved_paths|
+3. Configuration                                     |rockydocs-configuration|
+  - mkdocs serve port              |rockydocs-configuration-mkdocs-serve-port|
+  - LSP availability                |rockydocs-configuration-lsp-availability|
+  - preserved_paths                  |rockydocs-configuration-preserved_paths|
 4. RockyDocs Commands                           |rockydocs-rockydocs-commands|
   - Usage                                 |rockydocs-rockydocs-commands-usage|
 5. PyVenv Commands                                 |rockydocs-pyvenv-commands|
@@ -59,7 +59,7 @@ management within Neovim:
     - Simplifies the documentation creation process
 - Workflow Efficiency
     - Eliminates guesswork about final document appearance
-    - Speeds up documentation writing and review processes
+    - Accelerates documentation writing and review processes
     - Reduces potential formatting errors
 - Collaborative Editing Features
     - Helps maintain consistent documentation standards across contributors
@@ -117,7 +117,7 @@ This will install the nvim-rockydocs rock and its dependencies.
 
 
 ==============================================================================
-3. Config                                                   *rockydocs-config*
+3. Configuration                                     *rockydocs-configuration*
 
 The `rockydocs/configs.lua` file serves as the central configuration management
 module for the RockyDocs Neovim plugin.
@@ -125,40 +125,38 @@ module for the RockyDocs Neovim plugin.
 
 DEFAULT CONFIGURATION ~
 
-The default configuration is encapsulated within the **M.default_config**
-table, which includes several key settings:
+The encapsulation of the default configuration within the **M.default_config**
+table, includes several key settings:
 
-- _venvs_dir_: This setting specifies the directory where virtual environments
-    will be stored. By default, it is set to the Neovim data directory, appended
-    _with /venvs_. This ensures that all virtual environments created for different
-    projects are organized in a single location, making management straightforward.
-- _preserved_paths_: This is a list of directories that should be preserved in
-    the system PATH when activating a virtual environment. The default paths
-    include common binary directories, such as:
+- _venvs_dir_: This setting specifies the directory that will store the virtual
+    environments. By default, it sets it to the Neovim data directory, appended
+    _with /venvs_. This ensures the organization of all virtual environments
+    created for different projects in a single location, making management
+    straightforward.
+- _preserved_paths_: This is a list of directories preserved in the system PATH
+    when activating a virtual environment. The default paths include common binary
+    directories, such as:
     - vim.fn.stdpath("data") .. "/mason/bin" (for Mason-managed binaries)
     - /usr/local/bin
     - /usr/bin
     - os.getenv("HOME") .. "/.local/bin" (the user’s local binary directory)
 
-This setting ensures that essential commands remain accessible even when a
-virtual environment is activated.
+This setting ensures that essential commands remain accessible even during
+activation of a virtual environment.
 
 mkdocs_server: This section of the configuration handles settings related to
 the MkDocs server. Key parameters include:
 
-- _default_port_: The default port (8000) for running the MkDocs server. This
-    setting can be overridden when starting the server.
-- _port_range_start_ and _port_range_end_: These settings define a valid range
-    for port selection, helping to avoid conflicts with other applications that
-    might be using the same ports.
+- _default_port_: The default port (8000) for running the MkDocs server. This setting can be overridden when starting the server.
+- _port_range_start_ and _port_range_end_: These settings define a valid range for port selection, helping to avoid conflicts with other applications that might be using the same ports.
 
 
 CURRENT CONFIGURATION ~
 
 In addition to the default settings, the M.config table represents the current
-configuration that is used during the plugin’s operation. This configuration
-is merged with the default settings when the plugin is initialized. This design
-allows users to override specific settings without altering the defaults,
+configuration used during the plugin’s operation. When the plugin
+initializes, this configuration merges with the default settings. Users can
+override specific settings with this design without altering the defaults,
 providing flexibility in configuration.
 
 
@@ -167,48 +165,41 @@ STATE MANAGEMENT ~
 The `M.state table` is crucial for managing the state of the RockyDocs plugin.
 It tracks information such as:
 
-- original_path: Stores the original PATH environment variable, allowing the
-    plugin to restore it after deactivating a virtual environment.
-- original_python_path: Keeps the path of the original Python executable in use
-    before activating any virtual environment.
-- active: A boolean value that indicates whether a virtual environment is
-    currently active.
-- current_server_port: Stores the port number for the currently running MkDocs
-    server, helping to manage server status effectively.
-- server_job_id: Holds the job identifier for the MkDocs server process,
-    enabling the plugin to manage and monitor the server instance.
+- original_path: Stores the original PATH environment variable, allowing the plugin to restore it after deactivating a virtual environment.
+- original_python_path: Keeps the path of the original Python executable in use before activating any virtual environment.
+- active: A boolean value that indicates whether a virtual environment is currently active.
+- current_server_port: Stores the port number for the currently running MkDocs server, helping to manage server status effectively.
+- server_job_id: Holds the job identifier for the MkDocs server process, enabling the plugin to manage and monitor the server instance.
 
 The nvim-rockydocs plugin utilizes Neovim’s packadd command to load its
-dependencies and functionality on demand. This approach allows the plugin to be
-loaded only when needed, reducing Neovim’s startup time and improving overall
+dependencies and functionality on demand. This approach allows loading plugins
+only when needed, reducing Neovim’s startup time and improving overall
 performance.
 
-The plugin’s entry point is located in the `plugin/nvim-rockydocs.vim` file,
-which checks if the plugin has already been loaded and sets a flag to prevent
+The plugin’s entry point is in the `plugin/nvim-rockydocs.vim` file. It
+checks whether plugin loading has already occurred and sets a flag to prevent
 redundant loading. It then invokes a Lua function to set up the plugin’s
 configuration.
 
 The use of packadd by nvim-rockydocs eliminates the need for explicit
-configuration with lazy.nvim. Users can simply install the plugin and start
-using it without having to add any additional configuration to their lazy.nvim
-setup.
+configuration with lazy.nvim. Users can just install the plugin and start using
+it without having to add any additional configuration to their lazy.nvim setup.
 
-NOTE: Note about the `packadd` feature The packadd command is a feature in
-Neovim that allows users to load plugins on demand, rather than during Neovim
+NOTE: Note about the `packadd` feature. The packadd command is a feature in
+Neovim that allows for loading plugins on-demand, rather than during Neovim
 startup. This provides a more efficient and flexible way to manage plugins, as
-it enables users to load only the plugins they need for a specific task or
-project.
+users only need to load the plugins they need for a specific task or project.
 
 
-MKDOCS SERVE PORT                         *rockydocs-config-mkdocs-serve-port*
+MKDOCS SERVE PORT                  *rockydocs-configuration-mkdocs-serve-port*
 
 One of the key features of Mkdocs is the ability to serve your documentation
 locally for preview and testing purposes. By default, Mkdocs serves the site on
-port 8000. However, users may need to change this port due to various reasons
+port 8000. However, users might need to change this port due to various reasons
 such as port conflicts or specific project requirements. To change the default
 port used by Mkdocs when serving your documentation, you can specify the port
-in the `require("rockydocs").setup()` function. This function is used to
-configure nvim-rockydocs to allow setting the Mkdocs serve port.
+in the `require("rockydocs").setup()` function. This function is for
+configuring nvim-rockydocs to allow setting the Mkdocs serve port.
 
 Here is an example configuration snippet that demonstrates how to set the
 Mkdocs serve port to 8001:
@@ -218,41 +209,41 @@ Mkdocs serve port to 8001:
     require("rockydocs").setup({ mkdocs_port = 8001, })
 <
 
-In this example, replace 8001 with the port number you wish to use. After
+In this example, replace 8001 with the port number you want to use. After
 setting up nvim-rockydocs with this configuration, when you run the Mkdocs
 server, it will use the specified port instead of the default port 8000.
 
 
-LSP AVAILABILITY                           *rockydocs-config-lsp-availability*
+LSP AVAILABILITY                    *rockydocs-configuration-lsp-availability*
 
 
   Language servers are external tools that provide features such as syntax
   checking, code completion, and debugging for a specific programming language.
 The PATH environment variable is a crucial component in the plugin
-nvim-rockydocs as it allows you to specify the location of the language server
-executables within the virtual environment. This ensures that the plugin can
-access and utilize the language servers during documentation generation,
-providing accurate and up-to-date information for your projects.
+nvim-rockydocs as it allows for the specification of the location of the
+language server executables within the virtual environment. This ensures that
+the plugin can access and utilize the language servers during documentation
+generation, providing accurate and up-to-date information for your projects.
 
-When start the language server, nvim-rockydocs uses the PATH environment
+When the language server starts, nvim-rockydocs uses the PATH environment
 variable to locate the language server executable. The plugin executes the
-language server using the `vim.fn.system` function, which searches for the
+language server with the `vim.fn.system` function, which searches for the
 executable in the directories specified in the PATH variable.
 
 
-PRESERVED_PATHS                             *rockydocs-config-preserved_paths*
+PRESERVED_PATHS                      *rockydocs-configuration-preserved_paths*
 
-The preserved_paths option in configs.lua is used to specify a list of
-directories that should be preserved in the PATH environment variable when
-using nvim-rockydocs with a language server installed with _mason.nvim_.
+The preserved_paths option in configs.lua specifies a list of directories to
+preserve in the PATH environment variable when using nvim-rockydocs with a
+language server installed with _mason.nvim_.
 
 The purpose of preserved_paths is to ensure that certain directories are always
 included in the PATH environment variable, even when nvim-rockydocs is running.
-This is useful when you have other tools or executables that need to be
-accessed from the PATH environment variable. When nvim-rockydocs starts, it
-sets the PATH environment variable to the value specified in the path option.
-However, if preserved_paths is set, nvim-rockydocs will also append the
-directories specified in preserved_paths to the PATH environment variable.
+This is useful when you have other tools or executables you need to access from
+the PATH environment variable. When nvim-rockydocs starts, it sets the PATH
+environment variable to the value specified in the path option. However, if you
+define preserved_paths, nvim-rockydocs will also append the directories
+specified in preserved_paths to the PATH environment variable.
 
 This ensures that the directories specified in preserved_paths are always
 included in the PATH environment variable, even when nvim-rockydocs is running.
@@ -265,36 +256,23 @@ a language server installed with `mason.nvim`.
 4. RockyDocs Commands                           *rockydocs-rockydocs-commands*
 
 The "nvim-rockydocs" plugin provides a set of commands under the "RockyDocs"
-namespace, which are designed to streamline the documentation workflow for the
-Rocky Linux Documentation Project. These commands are the primary features of
-the plugin and are used to setup, serve, build, and browse the documentation
-projects.
+namespace, designed to streamline the documentation workflow for the Rocky
+Linux Documentation Project. These commands, used to setup, serve, build, and
+browse the documentation project, are the primary features of the plugin.
 
 The following RockyDocs commands are available:
 
-- RockyDocsSetup: This command sets up a new RockyDocs project by cloning
-    the repository and installing the required dependencies. It checks if a
-    virtual environment is active and installs the requirements using the pip
-    package manager.
-- RockyDocsServe: This command serves the documentation project using
-    MkDocs. It activates the virtual environment, checks if MkDocs is installed,
-    and starts the server in the background. The server can be stopped using the
-    RockyDocsStop command.
+- RockyDocsSetup: This command sets up a new RockyDocs project by cloning the repository and installing the required dependencies. It checks if a virtual environment is active and installs the requirements using the pip package manager.
+- RockyDocsServe: This command serves the documentation project using MkDocs. It activates the virtual environment, checks for the installation status of MkDocs, and starts the server in the background. You can stop the server using the RockyDocsStop command.
 - RockyDocsStop: This command stops the currently running MkDocs server.
-- RockyDocsBuild: This command builds the documentation project using
-    MkDocs. It activates the virtual environment, checks if MkDocs is installed,
-    and builds the documentation.
-- RockyDocsStatus: This command displays the status of the documentation
-    project, including whether a virtual environment is active, whether MkDocs is
-    installed, and whether the server is running.
-- RockyDocsOpen: This command open the RockyDocs documentation in the
-    default web browser. This command is a convenient way to preview the
-    documentation while you’re working on it.
+- RockyDocsBuild: This command builds the documentation project using MkDocs. It activates the virtual environment, checks for the installation status of MkDocs, and builds the documentation.
+- RockyDocsStatus: This command displays the status of the documentation project, including whether a virtual environment is active, the installation status of MkDocs, and whether the server is running.
+- RockyDocsOpen: This command opens the RockyDocs documentation in the default web browser. This command is a convenient way to preview the documentation while you are working on it.
 
 
 USAGE                                     *rockydocs-rockydocs-commands-usage*
 
-To use these RockyDocs commands, you can execute them in Neovim using the
+To use these RockyDocs commands, you can run them in Neovim using the
 `:RockyDocs<Command>` syntax. For example:
 
 
@@ -342,35 +320,22 @@ edit, and deploy high-quality documentation.
 5. PyVenv Commands                                 *rockydocs-pyvenv-commands*
 
 The "nvim-rockydocs" plugin provides a set of utility commands under the
-"PyVenv" namespace, which are designed to manage Python virtual environments
-directly within Neovim. These commands are not part of the main plugin
-functionality but rather serve as auxiliary tools to support the plugin’s
-primary features. PyVenv Commands
-
+"PyVenv" namespace, designed to manage Python virtual environments directly
+within Neovim. These commands are not part of the main plugin functionality,
+but rather serve as auxiliary tools to support the plugin’s primary features.
 The following PyVenv commands are available as utilities in the
 "nvim-rockydocs" plugin:
 
-- PyVenvCreate: This command creates a new Python virtual environment for
-    the current project. The environment is created using the python -m venv
-    command, and the virtual environment directory is stored in the venvs_dir path
-    specified in the plugin’s configuration.
-- PyVenvActivate: This command activates the virtual environment for the
-    current project. If the virtual environment does not exist, it will be created
-    first. The VIRTUAL_ENV environment variable is set to the path of the active
-    virtual environment, and the PATH environment variable is updated to
-    prioritize the virtual environment’s bin directory.
-- PyVenvDeactivate: This command deactivates the currently active virtual
-    environment, restoring the original environment variables.
-- PyVenvStatus: This command displays the status of the virtual environment,
-    including whether it is active, the Python version, and the path to the
-    virtual environment.
-- PyVenvRemove: This command removes the virtual environment for the current
-    project.
+- PyVenvCreate: This command creates a new Python virtual environment for the current project. The python -m venv command creates the environment, and stores the virtual environment directory in the venvs_dir path specified in the plugin’s configuration.
+- PyVenvActivate: This command activates the virtual environment for the current project. If the virtual environment does not exist, it creates it first. The command sets the VIRTUAL_ENV environment variable to the path of the active virtual environment, and updates the PATH environment variable to prioritize the virtual environment’s bin directory.
+- PyVenvDeactivate: This command deactivates the currently active virtual environment, restoring the original environment variables.
+- PyVenvStatus: This command displays the status of the virtual environment, including whether it is active, the Python version, and the path to the virtual environment.
+- PyVenvRemove: This command removes the virtual environment for the current project.
 
 
 USAGE                                        *rockydocs-pyvenv-commands-usage*
 
-To use these PyVenv commands, you can execute them in Neovim using the
+To use these PyVenv commands, you can run them in Neovim by using the
 `:PyVenv<Command>` syntax. For example:
 
 
@@ -420,26 +385,26 @@ efficiently, eliminating the need to switch between the editor and a terminal
 for common documentation tasks.
 
 Upon integrating RockyDocs into your workflow, you can easily create a new
-virtual environment specific to Rocky Linux documentation project using the
-:PyVenvCreate command. Once the virtual environment is established, activate it
-with :PyVenvActivate, ensuring that all dependencies for MkDocs can be managed
+virtual environment specific to the Rocky Linux documentation project with the
+:PyVenvCreate command. Once you establish the virtual environment, activate it
+with :PyVenvActivate, ensuring that Mkdocs can manage all dependencies
 effectively within that context. RockyDocs offers the command :RockyDocsSetup
 to initialize your documentation project by cloning template files and
 preparing the necessary structure.
 
-The plugin enables to serve the documentation locally with the :RockyDocsServe
-command. This command starts a MkDocs server, providing a live preview of the
-new pages in a web browser. Users can also specify ports if needed while
-accessing the server at the designated address.
+The plugin enables you to serve the documentation locally with the
+:RockyDocsServe command. This command starts a MkDocs server, providing a live
+preview of the new pages in a web browser. Users can also specify ports if
+needed while accessing the server at the designated address.
 
 In addition to serving documentation, RockyDocs allows for building static
 documentation files through the :RockyDocsBuild command. This is especially
-useful for deploying documentation once it has been finalized. Furthermore,
-users can monitor the status of their MkDocs environment using the
-:RockyDocsStatus command, which provides information about the active virtual
-environment, MkDocs installation, and any running servers.
+useful for deploying documentation once finalized. Furthermore, users can
+monitor the status of their MkDocs environment by using the :RockyDocsStatus
+command, which provides information about the active virtual environment,
+MkDocs installation, and any running servers.
 
-The RockyDocs Neovim Plugin significantly enhances the documentation workflow
+The RockyDocs Neovim plugin significantly enhances the documentation workflow
 for developers, offering powerful tools integrated within the Neovim interface,
 thus improving the efficiency and ease of managing documentation projects.
 
@@ -459,7 +424,7 @@ components are in place, verify that your setup is complete and functional by
 running a status check.
 
 By following these simple steps, you can quickly establish a robust and
-efficient documentation environment using nvim-rockydocs.
+efficient documentation environment by using nvim-rockydocs.
 
 **Step 1**: Create an empty Project Folder
 
@@ -498,9 +463,9 @@ folder.
 
 **Step 4**: Activate the Virtual Environment
 
-Activate the virtual environment using PyVenvActivate. This step is crucial as
-it allows you to install packages specific to your project without affecting
-the system Python environment:
+Activate the virtual environment by using PyVenvActivate. This step is crucial
+as it allows for the installation of packages specific to your project without
+affecting the system Python environment:
 
 >text
     :PyVenvActivate
@@ -534,10 +499,10 @@ and project structure, providing feedback on whether the setup is successful
 and ready for documentation work.
 
 By following these steps, you have successfully created a Rocky Linux
-documentation environment using nvim-rockydocs. This environment is now ready
-for you to create, manage, and publish your documentation projects efficiently,
-utilizing the powerful features of mkdocs and the convenience of nvim for
-editing and managing the documents.
+documentation environment by using nvim-rockydocs. This environment is now
+ready for you to create, manage, and publish your documentation projects
+efficiently, utilizing the powerful features of mkdocs and the convenience of
+nvim for editing and managing the documents.
 
 
 ==============================================================================
