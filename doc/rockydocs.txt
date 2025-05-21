@@ -1,4 +1,4 @@
-*rockydocs.txt*            For NVIM v0.10.4           Last change: 2025 May 17
+*rockydocs.txt*            For NVIM v0.10.4           Last change: 2025 May 21
 
 ==============================================================================
 Table of Contents                                *rockydocs-table-of-contents*
