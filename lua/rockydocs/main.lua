@@ -421,54 +421,33 @@ end
 
 -- Show the status of MkDocs and its environment {{{
 
---- @desc Get comprehensive status of RockyDocs environment
---- Reports on virtual environment status, MkDocs installation, project detection, and server status
---- @return nil
 function M.mkdocs_status()
-	local status_lines = { "RockyDocs status:" }
+	local status = "RockyDocs status:\n"
 
-	-- Virtual environment status
-	if utils.venv_is_active() then
-		table.insert(
-			status_lines,
-			string.format(
-				"Virtual environment: %s",
-				vim.env.VIRTUAL_ENV and vim.fn.fnamemodify(vim.env.VIRTUAL_ENV, ":t") or "None"
-			)
-		)
-		table.insert(status_lines, string.format("MkDocs installed: %s", utils.mkdocs_is_installed() and "Yes" or "No"))
-		table.insert(
-			status_lines,
-			string.format(
-				"Project: %s",
-				vim.fn.filereadable("mkdocs.yml") == 1 and "RockyDocs project detected" or "No project detected"
-			)
-		)
+	if not utils.venv_is_active() then
+		if utils.venv_exists() then
+			status = status .. "Virtual environment exists but is not active\n"
+		else
+			status = status .. "No active virtual environment and no virtual environment exists\n"
+		end
 	else
-		table.insert(
-			status_lines,
-			utils.venv_exists() and "Virtual environment exists but is not active" or "No virtual environment exists"
-		)
+		status = status .. "Virtual environment: " .. vim.fn.fnamemodify(vim.env.VIRTUAL_ENV, ":t") .. "\n"
+		status = status .. "MkDocs installed: " .. (utils.mkdocs_is_installed() and "Yes" or "No") .. "\n"
+
+		if vim.fn.filereadable("mkdocs.yml") == 1 then
+			status = status .. "RockyDocs project detected in current directory\n"
+		else
+			status = status .. "No RockyDocs project in current directory\n"
+		end
 	end
 
-	-- Server status
-	local server_running = configs.server_job_id and vim.fn.jobwait({ configs.server_job_id }, 0)[1] == -1
-	table.insert(status_lines, string.format("MkDocs server: %s", server_running and "Running" or "Not running"))
-
-	if server_running and configs.state.current_server_port then
-		table.insert(status_lines, string.format("Server port: %d", configs.state.current_server_port))
+	if configs.server_job_id and vim.fn.jobwait({ configs.server_job_id }, 0)[1] == -1 then
+		status = status .. "MkDocs server: Running\n"
+	else
+		status = status .. "MkDocs server: Not running\n"
 	end
 
-	-- Dynamic height based on the number of lines to write (set a minimum height)
-	local height = math.max(#status_lines + 2, 6) -- min height is 6 lines
-
-	-- Create buffer with dynamic height and fixed minimal width
-	utils.create_output_buffer("RockyDocs Status", 0.35, height / vim.o.lines, status_lines, {
-		right = true,
-		bottom = true,
-		padding = 5, -- 5 lines of padding from the bottom
-		wrap = true,
-	})
+	vim.notify(status, vim.log.levels.INFO)
 end
 
 -- }}}
