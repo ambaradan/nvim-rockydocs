@@ -18,7 +18,7 @@ jobs:
           vimdoc: rockydocs
           version: "NVIM v0.10.4"
           treesitter: true
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto generate Rockydocs helpfile"
           branch: ${{ github.head_ref }}
