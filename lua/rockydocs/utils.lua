@@ -27,6 +27,80 @@ local M = {}
 local config = require("rockydocs.configs").config
 local state = require("rockydocs.configs").state
 
+-- output buffer function {{{
+
+function M.create_output_buffer(title, width_percentage, height_percentage, initial_lines, opts)
+	opts = opts or {}
+	local padding = opts.padding or 2
+	local wrap = opts.wrap ~= false -- default to true if not specified
+	local buf = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_buf_set_name(buf, title)
+	vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
+	vim.api.nvim_set_option_value("swapfile", false, { buf = buf })
+	vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
+
+	-- Calculate dimensions for floating window based on percentages
+	local width = math.floor(vim.o.columns * width_percentage)
+	local height = math.floor(vim.o.lines * height_percentage)
+
+	-- Positioning options
+	local row
+	local col
+	if opts.right and opts.bottom then
+		-- Position at the right bottom corner with padding from the bottom
+		row = vim.o.lines - height - padding
+		col = vim.o.columns - width - padding
+	elseif opts.right then
+		-- Position at the right side
+		row = padding
+		col = vim.o.columns - width - padding
+	elseif opts.bottom then
+		-- Position at the bottom side
+		row = vim.o.lines - height - padding
+		col = math.floor((vim.o.columns - width) / 2)
+	else
+		-- Default to center positioning
+		row = math.floor((vim.o.lines - height) / 2)
+		col = math.floor((vim.o.columns - width) / 2)
+	end
+
+	-- Create floating window
+	local win = vim.api.nvim_open_win(buf, true, {
+		relative = "editor",
+		width = width,
+		height = height,
+		row = row,
+		col = col,
+		style = "minimal",
+		border = "rounded",
+		title = title,
+		title_pos = "center",
+	})
+
+	-- Set window options
+	vim.api.nvim_set_option_value("number", false, { scope = "local", win = win })
+	vim.api.nvim_set_option_value("relativenumber", false, { scope = "local", win = win })
+	vim.api.nvim_set_option_value("wrap", wrap, { scope = "local", win = win })
+
+	-- Add initial content to the buffer
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, initial_lines)
+
+	-- Add close mappings
+	vim.api.nvim_buf_set_keymap(buf, "n", "q", ":q<CR>", { noremap = true, silent = true })
+	vim.api.nvim_buf_set_keymap(buf, "n", "<ESC>", ":q<CR>", { noremap = true, silent = true })
+
+	return buf, win
+end
+
+function M.add_close_button_hint(buf, win, current_lines)
+	table.insert(current_lines, "")
+	table.insert(current_lines, "Press 'q' to close this window")
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, current_lines)
+	vim.api.nvim_win_set_cursor(win, { #current_lines, 0 })
+end
+
+-- }}}
+
 -- common utilities {{{
 
 -- Function to activate the virtual environment for Mkdocs commands
@@ -365,69 +439,5 @@ function M.status()
 end
 
 -- }}}
-
--- Open RockyDocs Environment in browser {{{
-
--- This function is responsible for opening the MkDocs browser.
-function M.open_mkdocs_browser()
-	-- Check if a server is running and we have a port
-	if not state.current_server_port then
-		-- If there is no server running, notify the user and return false
-		vim.notify("No MkDocs server is currently running", vim.log.levels.WARN)
-		return false
-	end
-
-	-- Construct the URL to open the MkDocs server
-	local url = string.format("http://localhost:%d", state.current_server_port)
-
-	-- Detect the operating system and choose the appropriate command to open the browser
-	local open_cmd
-	local os_command = vim.fn.system("uname -s"):gsub("\n", "")
-
-	-- If the operating system is macOS, use the 'open' command
-	if os_command == "Darwin" then
-		open_cmd = string.format("open %s", url)
-	-- If the operating system is Linux, try different browser commands
-	elseif os_command == "Linux" then
-		local browsers = {
-			"xdg-open",
-			"gnome-open",
-			"kde-open",
-			"x-www-browser",
-			"firefox",
-			"google-chrome",
-			"chromium",
-		}
-
-		-- Try each browser command until one is found that is executable
-		for _, browser in ipairs(browsers) do
-			if vim.fn.executable(browser) == 1 then
-				open_cmd = string.format("%s %s", browser, url)
-				break
-			end
-		end
-	-- If the operating system is Windows, use the 'start' command
-	elseif os_command:match("MINGW") or os_command:match("MSYS") or os_command:match("Windows") then
-		open_cmd = string.format("start %s", url)
-	end
-
-	-- Execute the command to open the browser
-	if open_cmd then
-		local result = vim.fn.system(open_cmd)
-		if vim.v.shell_error ~= 0 then
-			-- If the command failed, notify the user and return false
-			vim.notify(string.format("Failed to open browser: %s", result), vim.log.levels.ERROR)
-			return false
-		else
-			-- If the command succeeded, notify the user and return true
-			vim.notify(string.format("Opening MkDocs at %s", url), vim.log.levels.INFO)
-			return true
-		end
-	else
-		-- If we couldn't determine a browser to open the URL, notify the user and return false
-		vim.notify("Could not determine browser to open URL", vim.log.levels.ERROR)
-		return false
-	end
-end
 
 return M

@@ -39,7 +39,7 @@ end, {
 vim.api.nvim_create_user_command("RockyDocsStop", mkdocs.stop_serve, {})
 -- Add browser open command
 vim.api.nvim_create_user_command("RockyDocsOpen", function()
-	venv.open_mkdocs_browser()
+	mkdocs.open_browser()
 end, {})
 vim.api.nvim_create_user_command("RockyDocsBuild", mkdocs.build, {})
 vim.api.nvim_create_user_command("RockyDocsStatus", mkdocs.mkdocs_status, {})
